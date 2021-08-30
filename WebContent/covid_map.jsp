@@ -70,15 +70,15 @@ try{
     	  new google.maps.Marker({
     	    position: longlat,
     	    map: map,
-    	    icon: "http://localhost:8090/DatabaseProgramming/img/gflagm.png"
+    	    icon: "http://localhost:8090/img/gflagm.png"
     	  });  
       };
       
   </script>
-  
+  <br>
   <table>
   <tr>
-  <td align="center"><b><a href="sub_covid_page.jsp">선택한 국가 탐색</b></td>
+  <td align="center"><b><a href="xhr.jsp">선택한 국가 탐색</b></td>
   </tr>
   </table>
  
