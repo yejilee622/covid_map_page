@@ -54,13 +54,15 @@ try{
 		<br>
 		<a href="GetNewCovid.jsp">코로나 현황 보기</b>
 		<br><br>
-		<a href="GetNewCovid.jsp">격리면제 해당 확인</b>
+		<a href="GetNoTravel.jsp">격리면제 해당 확인</b>
 		<br><br>
-		<a href="GetNewCovid.jsp">날씨 조회하기</b>
+		<a href="Get.jsp">여행경보 국가 확인</b>
 		<br><br>
-		<a href="GetNewCovid.jsp">여행지 알아보기</b>
+		<a href="Get.jsp">날씨 조회하기</b>
 		<br><br>
-		<a href="GetNewCovid.jsp">숙박시설 검색하기</b>
+		<a href="Get.jsp">여행지 알아보기</b>
+		<br><br>
+		<a href="Get.jsp">숙박시설 검색하기</b>
 		</div><%
 	} } catch(SQLException ex) {
 		System.err.println("SQLException: "+ex.getMessage()); 
