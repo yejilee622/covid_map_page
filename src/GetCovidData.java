@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import org.apache.catalina.filters.SetCharacterEncodingFilter;
 /**
  * Servlet implementation class GetCovidData
  */
@@ -48,9 +48,9 @@ public class GetCovidData extends HttpServlet {
 	        System.out.println("Response code: " + conn.getResponseCode());
 	        BufferedReader rd;
 	        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),"utf-8"));
 	        } else {
-	            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+	            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(),"utf-8"));
 	        }
 	        StringBuilder sb = new StringBuilder();
 	        String line;

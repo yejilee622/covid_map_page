@@ -24,7 +24,7 @@ function getDataAjax() {
 	
 	// 스크립트에서 타사이트 접속시 크로스도메인 오류 발생
 	// 스크립트에서 내부 URL 을 호출하여 테이터를 가지고 오도록 수정
-	var userURL = "http://localhost:8090/DatabaseProgramming";
+	var userURL = "http://localhost:8090/";
 	var url = userURL + "/AjaxRequest.jsp?getUrl=";
 
 	// 공공포털 API - 데이터 호출 URL
@@ -100,7 +100,7 @@ function getDataXHR(){
 	
 	// 스크립트에서 타사이트 접속시 크로스도메인 오류 발생
 	// 스크립트에서 내부 URL 을 호출하여 테이터를 가지고 오도록 수정
-	var userURL = "http://localhost:8090/DatabaseProgramming";
+	var userURL = "http://localhost:8090/";
 	var url = userURL + "/AjaxRequest.jsp?getUrl=";
 
 	// 공공포털 API - 데이터 호출 URL
@@ -134,22 +134,31 @@ function getDataXHR(){
 function getCovidData(){
 
 	$.ajax({
-		url: "http://localhost:8090/DatabaseProgramming/GetCovidData",
+		url: "http://localhost:8090/GetCovidData",
 		type: "get",
 		dataType: "text",
 		success: function (data) {
 			var jsonData = parser.parse(data);
+			var session;
 			
 			// 국가별 코로나 현황 리스트
 			var items = jsonData.response.body.items.item; 
 			
 			$.each(items, function(index, item){
 				console.log(item.areaNm);
-				if(item.nationNm == '한국'){
-					console.log('한국의 확진자 현황');
-					console.log(item.natDeathCnt);
-					console.log(item.natDefCnt);
-					console.log(item.natDeathRate);
+				if(item.nationNm == session){
+					var covid_data="";
+					console.log(item.nationNm + '의 확진자 현황');
+					document.getElementById("data_Nm").innerHTML=item.nationNm;
+					console.log('대륙명: ' + item.areaNm);
+					document.getElementById("data_Ar").innerHTML=item.areaNm;
+					console.log('국가명: ' + item.nationNm);
+					console.log('총 사망자 수: ' + item.natDeathCnt);
+					document.getElementById("data_Dt").innerHTML=item.natDeathCnt;
+					console.log('총 확진자 수: ' + item.natDefCnt);
+					document.getElementById("data_Kt").innerHTML=item.natDefCnt;
+					console.log('확진률 대비 사망률(백분율): ' + item.natDeathRate);
+					document.getElementById("data_Br").innerHTML=item.natDeathRate;
 				}
 				
 				
@@ -166,68 +175,28 @@ function getCovidData(){
 
 </script>
 <p>
-<input type='button'  onclick='getDataAjax()' value="XMLHttpRequest 데이터 가지고 오기">
-<input type='button'  onclick='getDataXHR()' value="jQuery ajax 데이터 가지고 오기">
+
 <input type='button'  onclick='getCovidData()' value="코로나 발생 현황 데이터 가지고 오기">
 
-<table width="75%" align="center" border>
-
-<tr>
-<td>서비스키</td>
-<td>
-<input type="text" id="serviceKey" value='sIr4LhoEDOY3RKChgZWZ27TK47a7Sj0TPQtFlVc3OHRpKBnC0ASXWOos9chDrrqOdUhS3Ss958zYZNtuZaAdQA=='>
-</td>
-</tr>
-
-<tr>
-<td>페이지 번호</td>
-<td>
-<input type="text" id="pageNo" value='1'>
-</td>
-</tr>
-
-<tr>
-<td>페이지당 게시글수</td>
-<td>
-<input type="text" id="amount" value='10'>
-</td>
-</tr>
-
-<tr>
-<td>한글 국가명</td>
-<td>
-<input type="text" id="countryNm" value='가나'>
-</td>
-</tr>
-
-<tr>
-<td>ISO 2자리 코드</td>
-<td>
-<input type="text" id="countryIso" value='GH'>
-</td>
-</tr>
-
-</table>
-
 <br> <table width="75%" align="center" border> 
-<tr><td>국가명</td>
-<td><div id="nm"></div></td>
+<tr><td>대륙명</td>
+<td><div id="data_Ar"></div></td>
 </tr>
 <tr>
-<td>국가영문명</td>
-<td><div id="nm_e"></div></td>
+<td>국가명</td>
+<td><div id="data_Nm"></div></td>
 </tr>
 <tr>
-<td>대륙명</td>
-<td><div id="nm_c"></div></td>
+<td>총 사망자 수</td>
+<td><div id="data_Dt"></div></td>
 </tr>
 <tr>
-<td>대륙영문명</td>
-<td><div id="nm_ce"></div></td>
+<td>총 확진자 수</td>
+<td><div id="data_Kt"></div></td>
 </tr>
 <tr>
-<td>여행경보</td>
-<td><div id="alarm"></div></td>
+<td>확진률 대비 사망률(백분율)</td>
+<td><div id="data_Br"></div></td>
 </tr>
 </table>
 

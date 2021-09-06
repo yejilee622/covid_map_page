@@ -9,6 +9,7 @@
 
 </head>
 <body>
+
 코로나 여행 정보
 <br>
 <div id="map" style="width:75%; height:75vh; float:left; margin-right:10px"></div>
@@ -35,14 +36,31 @@ try{
 	myResultSet = stmt.executeQuery(mySQL);
 	if(myResultSet != null) {
 		%>
-		<select name="countrynames"> <%
+		<br>
+		<select name="countrynames" id="countrynames" onchange=SetBox()> <%
 		while(myResultSet.next()) {
 			String c_nm = myResultSet.getString("COUN_NM");
 			%>
     		<option value="ctn"><%=c_nm %></option>
 			<%
 		}%>
-		</select>
+		</select><br>
+		<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+		<script type="text/javascript">
+		function SetBox() {
+		var target = document.getElementById("countrynames");
+		}
+		</script>
+		<br>
+		<a href="GetNewCovid.jsp">코로나 현황 보기</b>
+		<br><br>
+		<a href="GetNewCovid.jsp">격리면제 해당 확인</b>
+		<br><br>
+		<a href="GetNewCovid.jsp">날씨 조회하기</b>
+		<br><br>
+		<a href="GetNewCovid.jsp">여행지 알아보기</b>
+		<br><br>
+		<a href="GetNewCovid.jsp">숙박시설 검색하기</b>
 		</div><%
 	} } catch(SQLException ex) {
 		System.err.println("SQLException: "+ex.getMessage()); 
@@ -51,11 +69,11 @@ try{
 %>
 
 
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT7sSTMO5sgyqu_1l0KuaIK_QAyv0U44c&callback=initMap&region=kr"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLBoEc6SOFTtsotbLdVQg75x0IS3GzlGI&callback=initMap&region=kr"></script>
   <script>
     function initMap() {
-      var longlat = { lat: 37.5642135 ,lng: 127.0016985 };
-      var seoul = { lat: 37.5642135 ,lng: 127.0016985 };
+      var longlat = { lat: 37.5642135 ,lng: 127.0016985 }; //진짜 서울
+      var seoul = { lat: 15, lng: 127.0016985 };
       var map = new google.maps.Map(
         document.getElementById('map'), {
           zoom: 2,
@@ -72,15 +90,13 @@ try{
     	    map: map,
     	    icon: "http://localhost:8090/img/gflagm.png"
     	  });  
+    	  
       };
       
   </script>
   <br>
-  <table>
-  <tr>
-  <td align="center"><b><a href="xhr.jsp">선택한 국가 탐색</b></td>
-  </tr>
-  </table>
+  <p>
+
  
 </body>
 </html>
