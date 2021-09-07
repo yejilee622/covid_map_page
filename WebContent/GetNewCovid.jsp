@@ -146,7 +146,7 @@ function getCovidData(){
 			
 			$.each(items, function(index, item){
 				console.log(item.areaNm);
-				if(item.nationNm == session){
+				if(item.nationNm == '한국'){
 					var covid_data="";
 					console.log(item.nationNm + '의 확진자 현황');
 					document.getElementById("data_Nm").innerHTML=item.nationNm;

@@ -60,7 +60,7 @@ public class GetCovidData extends HttpServlet {
 	        rd.close();
 	        conn.disconnect();
 	        System.out.println(sb.toString());
-	        response.setCharacterEncoding("UTF-8");
+	    //    response.setCharacterEncoding("UTF-8");
 	        response.getWriter().append(sb.toString());
 	}
 
