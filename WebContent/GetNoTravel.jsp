@@ -17,7 +17,6 @@
 
 아래 해당 국가들은 격리 면제가 적용되지 않는 국가들입니다
 <br>
-<br>
 <%
 	String test = "";
 	Connection myConn = null; Statement stmt=null;
@@ -42,13 +41,9 @@ try{
 			String c_nm_no = myResultSet.getString("COUN_NM");
 			String str[] = new String[200];
 			test += c_nm_no+",";
-			str[i]=c_nm_no; %>
-			
-			<div id=c_nm_new onchange=getCovidData('<%=str[i++]%>') ><%=str[i++]%></div>
-			<%
+			str[i]=c_nm_no;
 			}%>
 		<script type="text/javascript">		
-		document.getElementById("NoTravel").append="hhh";
 			function getCovidData(){
 				var countryStr = "<%=test%>";
 				var countryList = countryStr.split(",");
@@ -64,7 +59,6 @@ try{
 						
 						// 국가별 코로나 현황 리스트
 						var items = jsonData.response.body.items.item; 
-						console.log(element.innerHTML);
 						
 						$.each(items, function(index, item){
 							console.log(item.areaNm);
@@ -72,19 +66,8 @@ try{
 								console.log("================"+countryname);
 								if(countryname==item.nationNm) {
 									var covid_data="";
-									console.log(item.nationNm + '의 확진자 현황');
-									//document.getElementById("data_Nm").innerHTML=item.nationNm;
-									console.log('대륙명: ' + item.areaNm);
-									//document.getElementById("data_Ar").innerHTML=item.areaNm;
-									console.log('국가명: ' + item.nationNm);
-									console.log('총 사망자 수: ' + item.natDeathCnt);
-									//document.getElementById("data_Dt").innerHTML=item.natDeathCnt;
-									console.log('총 확진자 수: ' + item.natDefCnt);
-									//document.getElementById("data_Kt").innerHTML=item.natDefCnt;
-									console.log('확진률 대비 사망률(백분율): ' + item.natDeathRate);
-									//document.getElementById("data_Br").innerHTML=item.natDeathRate;
 									
-									dataHtml+="<table width='75%' align='center' border>"; 
+									dataHtml+="<table width='50%' border>"; 
 									dataHtml+="<tr><td>대륙명</td>";
 									dataHtml+="<td><div id='data_Ar'>"+item.areaNm+"</div></td>";
 									dataHtml+="</tr>";
@@ -98,18 +81,20 @@ try{
 									dataHtml+="</tr>";
 									dataHtml+="<tr>";
 									dataHtml+="<td>총 확진자 수</td>";
-									dataHtml+="<td><div id='data_Kt'>"+item.natDeCnt+"</div></td>";
+									dataHtml+="<td><div id='data_Kt'>"+item.natDefCnt+"</div></td>";
 									dataHtml+="</tr>";
 									dataHtml+="<tr>";
 									dataHtml+="<td>확진률 대비 사망률(백분율)</td>";
 									dataHtml+="<td><div id='data_Br'>"+item.natDeathRate+"</div></td>";
 									dataHtml+="</tr>";
 									dataHtml+="</table>";
+									dataHtml+="<br>";
+									dataHtml+="<br>";
 								}
 							});
 						});
 						
-						document.getElementById("NoTravel").append = dataHtml;
+						document.getElementById("NoTravel").innerHTML = dataHtml;
 					},
 					error: function (xhr, o, err){
 						console.log(xhr.status + ":" +o+":"+err);
@@ -133,7 +118,6 @@ try{
 <input type='button'  onclick='getCovidData()' value="코로나 발생 현황 데이터 가지고 오기">
 
 <div id="NoTravel" width=700 height=700>
-test
 </div>
 
  
