@@ -14,9 +14,11 @@
 
 <!-- xml to json xml을 json 형식으로 변경하기 위한 라이브러리를 추가 합니다. -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fast-xml-parser/3.19.0/parser.min.js"></script>
+==================================================<br>
+아래 해당 국가들은 2차 백신 접종 완료에도<br>
+격리 면제가 적용되지 않는 국가들입니다 (2021.09 외교부 해외안전여행)<br>
+==================================================<br>
 
-아래 해당 국가들은 격리 면제가 적용되지 않는 국가들입니다
-<br>
 <%
 	String test = "";
 	Connection myConn = null; Statement stmt=null;
@@ -57,16 +59,32 @@ try{
 						const element = document.getElementById("c_nm_new");
 						var dataHtml="";
 						
+						var nation_name = "";
+					
+						var items = jsonData.response.body.items.item; 
+						
+						var getParameters = function (paramName) { 
+						var returnValue; 
+						var url = location.href; 
+						var parameters = (url.slice(url.indexOf('?') + 1, url.length)).split('&'); 
+						for (var i = 0; i < parameters.length; i++) { 
+							var varName = parameters[i].split('=')[0]; 
+							if (varName.toUpperCase() == paramName.toUpperCase()) { returnValue = parameters[i].split('=')[1]; return decodeURIComponent(returnValue); } } };
+						
+						nation_name=getParameters('nation_name');
+						
 						// 국가별 코로나 현황 리스트
 						var items = jsonData.response.body.items.item; 
 						
 						$.each(items, function(index, item){
-							console.log(item.areaNm);
+							if(nation_name==item.nationNm) {
+								dataHtml+=nation_name+"은 격리면제 국가에 해당되지 않습니다<br><br>";
+							}
+						}) 
+						
+						$.each(items, function(index, item){
 							$.each(countryList, function(i, countryname){
-								console.log("================"+countryname);
 								if(countryname==item.nationNm) {
-									var covid_data="";
-									
 									dataHtml+="<table width='50%' border>"; 
 									dataHtml+="<tr><td>대륙명</td>";
 									dataHtml+="<td><div id='data_Ar'>"+item.areaNm+"</div></td>";
@@ -104,7 +122,9 @@ try{
 				});
 				
 			}
-
+			
+			getCovidData();
+			
 			</script>
 			<p> <%
 		} 
@@ -114,8 +134,6 @@ try{
 	stmt.close(); myConn.close();
 %>
 <p>
-
-<input type='button'  onclick='getCovidData()' value="코로나 발생 현황 데이터 가지고 오기">
 
 <div id="NoTravel" width=700 height=700>
 </div>

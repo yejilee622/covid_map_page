@@ -6,7 +6,6 @@
 </title></head>
 <body>
 
-
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
 <!-- xml to json xml을 json 형식으로 변경하기 위한 라이브러리를 추가 합니다. -->
@@ -18,118 +17,6 @@
 // 샘플
 // http://apis.result.data[i].go.kr/1262000/TravelAlarmService2/getTravelAlarmList2?serviceKey=sIr4LhoEDOY3RKChgZWZ27TK47a7Sj0TPQtFlVc3OHRpKBnC0ASXWOos9chDrrqOdUhS3Ss958zYZNtuZaAdQA==&pageNo=1&numOfRows=10&cond[country_nm::EQ]=%EA%B0%80%EB%82%98&cond[country_iso_alp2::EQ]=GH
 
-	
-function getDataAjax() {
-	
-	
-	// 스크립트에서 타사이트 접속시 크로스도메인 오류 발생
-	// 스크립트에서 내부 URL 을 호출하여 테이터를 가지고 오도록 수정
-	var userURL = "http://localhost:8090/";
-	var url = userURL + "/AjaxRequest.jsp?getUrl=";
-
-	// 공공포털 API - 데이터 호출 URL
-	var subURL = 'http://apis.data.go.kr/1262000/TravelAlarmService2/getTravelAlarmList2';
-
-	// 공공포털 API - 데이터 호출 parm
-	var parm = '';
-	parm = '?serviceKey='+ document.getElementById('serviceKey').value; /* 발급받은 서비스키 */
-	parm += '&pageNo=' + document.getElementById('pageNo').value;  /* 페이지 번호 */
-	parm += '&numOfRows=' + document.getElementById('amount').value;  /*페이지당 게시물수*/
-	// '[', ']' 는 URI에 유효하지 않은 문자로 인식 되므로 encodeURI 처리를 해줍니다 
-	parm += encodeURI('&cond[country_nm::EQ]=' + document.getElementById('countryNm').value);  /*나라 (한글명)*/
-	parm += encodeURI('&cond[country_iso_alp2::EQ]=' + document.getElementById('countryIso').value); /*iso 코드*/
-	
-	$.ajax({	
-		"url" : url + subURL + parm,
-		"type" : "GET",
-		"success" : function(result) {
-			console.log('result : ', result);
-			
-			var dataHtml = "";
-			for(var i = 0; i < result.data.length; i++){
-				dataHtml += 
-					'result.data[i].alarm_lvl:' + result.data[i].alarm_lvl
-					+'<br>result.data[i].continent_cd:'+ result.data[i].continent_cd
-					+'<br>result.data[i].continent_eng_nm:'+ result.data[i].continent_eng_nm
-					+'<br>result.data[i].continent_nm:'+ result.data[i].continent_nm
-					+'<br>result.data[i].country_eng_nm:'+ result.data[i].country_eng_nm
-					+'<br>result.data[i].country_iso_alp2:'+ result.data[i].country_iso_alp2
-					+'<br>result.data[i].country_nm:'+ result.data[i].country_nm
-					+'<br>result.data[i].dang_map_download_url:'+ result.data[i].dang_map_download_url
-					+'<br>result.data[i].flag_download_url:'+ result.data[i].flag_download_url
-					+'<br>result.data[i].map_download_url:'+ result.data[i].map_download_url
-					+'<br>result.data[i].region_ty:'+ result.data[i].region_ty
-					+'<br>result.data[i].remark:'+ result.data[i].remark
-					+'<br>result.data[i].written_dt:'+ result.data[i].written_dt;
-
-			}
-			
-		/*	document.getElementById("dataDiv").innerHTML = dataHtml;*/
-			
-			var dataHtml2 = "";
-			dataHtml2 = result.data[0].country_nm;
-			document.getElementById("nm").innerHTML = dataHtml2;
-			dataHtml2 = result.data[0].country_eng_nm;
-			document.getElementById("nm_e").innerHTML = dataHtml2;
-			dataHtml2 = result.data[0].continent_nm;
-			document.getElementById("nm_c").innerHTML = dataHtml2;
-			dataHtml2 = result.data[0].continent_eng_nm;
-			document.getElementById("nm_ce").innerHTML = dataHtml2;
-			dataHtml2 = result.data[0].alarm_lvl;
-			document.getElementById("alarm").innerHTML = dataHtml2;
-			
-		},
-	
-		"async" : "false",
-		"dataType" : "json",
-		"error": function(xhr, o, err){
-			console.log(xhr.status + ":" +o+":"+err);
-			console.log(xhr.responseText);
-			// 메세지 처리
-			var err = parseXmlToJson(xhr.responseText);
-			console.log('err:' , err.OpenAPI_ServiceResponse.cmmMsgHeader.errMsg);
-			console.log('err:' , err.OpenAPI_ServiceResponse.cmmMsgHeader.returnAuthMsg);
-			
-			document.getElementById("dataDiv").innerHTML = "오류가 발생 했습니다.<br>"+err.OpenAPI_ServiceResponse.cmmMsgHeader.errMsg+"<br>"+err.OpenAPI_ServiceResponse.cmmMsgHeader.returnAuthMsg;
-
-		}
-	});	
-}
-
-function getDataXHR(){
-	
-	// 스크립트에서 타사이트 접속시 크로스도메인 오류 발생
-	// 스크립트에서 내부 URL 을 호출하여 테이터를 가지고 오도록 수정
-	var userURL = "http://localhost:8090/";
-	var url = userURL + "/AjaxRequest.jsp?getUrl=";
-
-	// 공공포털 API - 데이터 호출 URL
-	var subURL = 'http://apis.data.go.kr/1262000/TravelAlarmService2/getTravelAlarmList2';
-
-	// 공공포털 API - 데이터 호출 parm
-	var parm = '';
-	parm = '?serviceKey='+document.getElementById('serviceKey').value; /* 발급받은 서비스키 */
-	parm += '&pageNo=' + document.getElementById('pageNo').value;  /* 페이지 번호 */
-	parm += '&numOfRows=' + document.getElementById('amount').value;  /*페이지당 게시물수*/
-	// '[', ']' 는 URI에 유효하지 않은 문자로 인식 되므로 encodeURI 처리를 해줍니다 
-	parm += encodeURI('&cond[country_nm::EQ]=' + document.getElementById('countryNm').value);  /*나라 (한글명)*/
-	parm += encodeURI('&cond[country_iso_alp2::EQ]=' + document.getElementById('countryIso').value); /*iso 코드*/
-		
-	var xhr = new XMLHttpRequest();
-	
-	xhr.open('GET', url + subURL + parm);
-	
-	xhr.onreadystatechange = function() {
-	    if (this.readyState == 4) {
-	        console.log('Status: ', this.status);
-	        console.log('nHeaders: ', JSON.stringify(this.getAllResponseHeaders()))
-	        console.log('nBody: ', this.responseText);
-	    }
-	};
-
-	xhr.send();
-}
-
 // 코로나 발생 현황 데이터 가지고 오기
 function getCovidData(){
 
@@ -139,25 +26,35 @@ function getCovidData(){
 		dataType: "text",
 		success: function (data) {
 			var jsonData = parser.parse(data);
-			var session;
+			var nation_name = "";
+			var img_url;
 			
 			// 국가별 코로나 현황 리스트
 			var items = jsonData.response.body.items.item; 
+			var getParameters = function (paramName) { 
+			// 리턴값을 위한 변수 선언 
+			var returnValue; 
+			// 현재 URL 가져오기
+			var url = location.href; 
+			// get 파라미터 값을 가져올 수 있는 ? 를 기점으로 slice 한 후 split 으로 나눔
+			var parameters = (url.slice(url.indexOf('?') + 1, url.length)).split('&'); 
+			// 나누어진 값의 비교를 통해 paramName 으로 요청된 데이터의 값만 return
+			for (var i = 0; i < parameters.length; i++) { 
+				var varName = parameters[i].split('=')[0]; 
+				if (varName.toUpperCase() == paramName.toUpperCase()) { returnValue = parameters[i].split('=')[1]; return decodeURIComponent(returnValue); } } };
+			
+			nation_name=getParameters('nation_name');
 			
 			$.each(items, function(index, item){
 				console.log(item.areaNm);
-				if(item.nationNm == '한국'){
+				if(item.nationNm == nation_name){
 					var covid_data="";
+					nation_name=item.nationNm;
 					console.log(item.nationNm + '의 확진자 현황');
 					document.getElementById("data_Nm").innerHTML=item.nationNm;
-					console.log('대륙명: ' + item.areaNm);
 					document.getElementById("data_Ar").innerHTML=item.areaNm;
-					console.log('국가명: ' + item.nationNm);
-					console.log('총 사망자 수: ' + item.natDeathCnt);
 					document.getElementById("data_Dt").innerHTML=item.natDeathCnt;
-					console.log('총 확진자 수: ' + item.natDefCnt);
 					document.getElementById("data_Kt").innerHTML=item.natDefCnt;
-					console.log('확진률 대비 사망률(백분율): ' + item.natDeathRate);
 					document.getElementById("data_Br").innerHTML=item.natDeathRate;
 				}
 				
@@ -172,13 +69,19 @@ function getCovidData(){
 	});
 	
 }
-
+getCovidData();
 </script>
 <p>
 
-<input type='button'  onclick='getCovidData()' value="코로나 발생 현황 데이터 가지고 오기">
-
-<br> <table width="75%" align="center" border> 
+==========================================<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="https://opendata.mofa.go.kr:8444/fileDownload/images/country_images/flags/16/20201125_211131298.gif" width=60px height=60px></a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+해당 국가의 코로나 발생 현황 입니다<a>
+<br>
+==========================================<br>
+<a><img src="https://opendata.mofa.go.kr:8444/fileDownload/images/country_images/maps/15/20201124_221534093.png" width=300px height=300px></a>
+<br> <table width="35%" border> 
 <tr><td>대륙명</td>
 <td><div id="data_Ar"></div></td>
 </tr>

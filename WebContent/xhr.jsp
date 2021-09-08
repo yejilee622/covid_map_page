@@ -111,20 +111,17 @@ function getDataXHR(){
 	var url = userURL + "/AjaxRequest.jsp?getUrl=";
 
 	// 공공포털 API - 데이터 호출 URL
-	var subURL = 'http://apis.data.go.kr/1262000/TravelAlarmService2/getTravelAlarmList2';
+	var subURL =  'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson';
 
 	// 공공포털 API - 데이터 호출 parm
-	var parm = '';
-	parm = '?serviceKey='+document.getElementById('serviceKey').value; /* 발급받은 서비스키 */
-	parm += '&pageNo=' + document.getElementById('pageNo').value;  /* 페이지 번호 */
-	parm += '&numOfRows=' + document.getElementById('amount').value;  /*페이지당 게시물수*/
-	// '[', ']' 는 URI에 유효하지 않은 문자로 인식 되므로 encodeURI 처리를 해줍니다 
-	parm += encodeURI('&cond[country_nm::EQ]=' + document.getElementById('countryNm').value);  /*나라 (한글명)*/
-	parm += encodeURI('&cond[country_iso_alp2::EQ]=' + document.getElementById('countryIso').value); /*iso 코드*/
-		
+	var queryParams = '?' + encodeURIComponent('ServiceKey') + '='+'sIr4LhoEDOY3RKChgZWZ27TK47a7Sj0TPQtFlVc3OHRpKBnC0ASXWOos9chDrrqOdUhS3Ss958zYZNtuZaAdQA%3D%3D'; /*Service Key*/
+	queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+	queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
+	queryParams += '&' + encodeURIComponent('startCreateDt') + '=' + encodeURIComponent('20200410'); /**/
+	queryParams += '&' + encodeURIComponent('endCreateDt') + '=' + encodeURIComponent('20200410'); /**/
 	var xhr = new XMLHttpRequest();
 	
-	xhr.open('GET', url + subURL + parm);
+	xhr.open('GET', url + subURL + queryParams);
 	
 	xhr.onreadystatechange = function() {
 	    if (this.readyState == 4) {
