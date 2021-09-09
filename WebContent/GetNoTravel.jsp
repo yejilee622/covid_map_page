@@ -138,6 +138,26 @@ try{
 <div id="NoTravel" width=700 height=700>
 </div>
 
+  <style type="text/css">
+
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+      	background: #F4D4E7;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: 'GowunBatang-Regular';
+      }
+      
+      @font-face {
+    font-family: 'GowunBatang-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunBatang-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+    </style>
+
  
 </body>
 </html>

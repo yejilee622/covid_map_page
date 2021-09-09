@@ -5,17 +5,11 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>코로나 여행정보</title>
-
 </head>
 <body>
-
-코로나 여행 정보
-<br>
+<div id="title" style="font-weight:bold; font-size:25px; color:gray;" align="center">코로나 여행정보 사이트 </div>
 <div id="map" style="width:75%; height:75vh; float:left; margin-right:10px"></div>
 <div style="float: left;">
-국가를 선택해주세요
-<br>
 <%
 	Connection myConn = null; Statement stmt=null;
 	ResultSet myResultSet = null; String mySQL ="";
@@ -35,7 +29,7 @@ try{
 	myResultSet = stmt.executeQuery(mySQL);
 	if(myResultSet != null) {
 		%>
-		<select style="font-family: 'GowunBatang-Regular';" name="countrynames" id="countrynames"> <%
+		<select style="font-family: 'GowunBatang-Regular'; font-size:17px;" name="countrynames" id="countrynames"> <%
 		while(myResultSet.next()) {
 			String c_nm = myResultSet.getString("COUN_NM");
 			%>
@@ -54,21 +48,40 @@ try{
 			var target = $('#countrynames').val();
 			location.href="GetNoTravel.jsp?nation_name="+encodeURI(target,"UTF-8");
 		}
+		function GoToOk() {
+			var target = $('#countrynames').val();
+			location.href="GetOkCovid.jsp?nation_name="+encodeURI(target,"UTF-8");
+		}
+		function GoToCity() {
+			location.href="CityCovid.jsp";
+		}
+		function GoToWeather() {
+			location.href="CityCovid.jsp";
+		}
+		function GoToPlace() {
+			location.href="CityCovid.jsp";
+		}
+		function GoToStay() {
+			location.href="CityCovid.jsp";
+		}
+		function a(ctn) {
+			location.href="GetNewCovid.jsp?nation_name"+encodeURI(ctn,"UTF-8");
+		}
 		</script>
 		<br>
-		<input type=button id=gotonew value=해당국가코로나현황 onclick="GoToNew();">
+		<input type=button class="button" id=gotonew value="해당 국가 코로나 현황 " style="font-family:GowunBatang-Regular" onclick="GoToNew();">
 		<br><br>
-		<input type=button id=gotonew value=격리면제국가확인 onclick="GoToNo();">
+		<input type=button class="button" id=gotonew value="격리 면제 국가 확인" style="font-family:GowunBatang-Regular" onclick="GoToNo();">
 		<br><br>
-		<a href="GetOkCovid.jsp">해외여행 가능 국가</a>
+		<input type=button class="button" id=gotonew value="해외여행 가능 국가" style="font-family:GowunBatang-Regular" onclick="GoToOk();">
 		<br><br>
-		<a href="CityCovid.jsp">국내 지역별 코로나 현황</a>
+		<input type=button class="button" id=gotonew value="국내 지역별 코로나 현황 " style="font-family:GowunBatang-Regular" onclick="GoToCity();">
 		<br><br>
-		<a href="Weather.jsp">세계 날씨 조회하기</a>
+		<input type=button class="button" id=gotonew value="세계 날씨 조회하기" style="font-family:GowunBatang-Regular" onclick="GoToNew();">
 		<br><br>
-		<a href="Get.jsp">여행지 알아보기</a>
+		<input type=button class="button" id=gotonew value="관광지 알아보기" style="font-family:GowunBatang-Regular" onclick="GoToNew();">
 		<br><br>
-		<a href="Get.jsp">숙박시설 검색하기</a>
+		<input type=button class="button" id=gotonew value="숙박시설 알아보기" style="font-family:GowunBatang-Regular" onclick="GoToNew();">
 		</div><%
 	} } catch(SQLException ex) {
 		System.err.println("SQLException: "+ex.getMessage()); 
@@ -85,10 +98,8 @@ try{
       	width: 60%;
       }
       
-      
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
- 
       
       #map {
         height: 100%;
@@ -97,6 +108,7 @@ try{
       /* Optional: Makes the sample page fill the window. */
       html,
       body {
+      	background: #F4D4E7;
         height: 100%;
         margin: 0;
         padding: 0;
@@ -109,7 +121,31 @@ try{
     font-weight: normal;
     font-style: normal;
 }
-      
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+.button {
+-webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+margin: 0;
+  padding: 0.5rem 1rem;
+
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+
+  display: inline-block;
+  width: auto;
+
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  cursor: pointer;
+
+  transition: 0.5s;
+}
+
 
     </style>
     
@@ -131,7 +167,7 @@ try{
       };
 
     var locations = [
-      ['<a href="GetNewCovid.jsp">대한민국</a>', 37.5546788, 126.9706069],
+      ['<a href="GetNewCovid.jsp">한국</a>', 37.5546788, 126.9706069],
       ['아르헨티나',	-36.3,	-60],
       ['호주',	-35.15,	149.0],
       ['오스트리아',	48.12,	16.22],
@@ -169,7 +205,6 @@ try{
    [    '네덜란드',	52.23,	4.54],
    [    '뉴칼레도니아',	-22.17,	166.3],
    [    '뉴질랜드',	-41.19,	174.4],
- [      '북한',	39.09,	125.3],
  [      '노르웨이',	59.55,	10.45],
  [      '팔라우',	7.2,	134.2],
  [      '페루',	-12,	-77],
@@ -212,6 +247,7 @@ try{
         return function() {
           infowindow.setContent(locations[i][0]);
           infowindow.open(map, marker);
+          
         }
       })(marker, i));
     }    
@@ -220,8 +256,11 @@ try{
     </script>
   </head>
   <body>
+
   <div id = "bound">
-    <div id="map"> 지도 위 마크를 클릭하시면 해당 국가의 코로나 발생 현황을 알 수 있습니다</div>
+    <div id="map">
+    	<div align="right">지도 위 마크를 클릭하시면 해당 국가의 코로나 발생 현황을 알 수 있습니다</div>
+    </div>
   </div>
   
   <div id="myname"></div>
