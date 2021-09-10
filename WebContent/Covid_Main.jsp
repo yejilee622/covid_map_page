@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 <!DOCTYPE html>
 <html>
@@ -7,7 +7,7 @@
 <meta charset="EUC-KR">
 </head>
 <body>
-<div id="title" style="font-weight:bold; font-size:25px; color:gray;" align="center">ÄÚ·Î³ª ¿©ÇàÁ¤º¸ »çÀÌÆ® </div>
+<div id="title" style="font-weight:bold; font-size:25px; color:gray;" align="center">ì½”ë¡œë‚˜ ì—¬í–‰ì •ë³´ ì‚¬ì´íŠ¸ </div>
 <div id="map" style="width:75%; height:75vh; float:left; margin-right:10px"></div>
 <div style="float: left;">
 <%
@@ -69,19 +69,19 @@ try{
 		}
 		</script>
 		<br>
-		<input type=button class="button" id=gotonew value="ÇØ´ç ±¹°¡ ÄÚ·Î³ª ÇöÈ² " style="font-family:GowunBatang-Regular" onclick="GoToNew();">
+		<input type=button class="button" id=gotonew value="í•´ë‹¹ êµ­ê°€ ì½”ë¡œë‚˜ í˜„í™© " style="font-family:GowunBatang-Regular" onclick="GoToNew();">
 		<br><br>
-		<input type=button class="button" id=gotonew value="°Ý¸® ¸éÁ¦ ±¹°¡ È®ÀÎ" style="font-family:GowunBatang-Regular" onclick="GoToNo();">
+		<input type=button class="button" id=gotonew value="ê²©ë¦¬ ë©´ì œ êµ­ê°€ í™•ì¸" style="font-family:GowunBatang-Regular" onclick="GoToNo();">
 		<br><br>
-		<input type=button class="button" id=gotonew value="ÇØ¿Ü¿©Çà °¡´É ±¹°¡" style="font-family:GowunBatang-Regular" onclick="GoToOk();">
+		<input type=button class="button" id=gotonew value="í•´ì™¸ì—¬í–‰ ê°€ëŠ¥ êµ­ê°€" style="font-family:GowunBatang-Regular" onclick="GoToOk();">
 		<br><br>
-		<input type=button class="button" id=gotonew value="±¹³» Áö¿ªº° ÄÚ·Î³ª ÇöÈ² " style="font-family:GowunBatang-Regular" onclick="GoToCity();">
+		<input type=button class="button" id=gotonew value="êµ­ë‚´ ì§€ì—­ë³„ ì½”ë¡œë‚˜ í˜„í™© " style="font-family:GowunBatang-Regular" onclick="GoToCity();">
 		<br><br>
-		<input type=button class="button" id=gotonew value="¼¼°è ³¯¾¾ Á¶È¸ÇÏ±â" style="font-family:GowunBatang-Regular" onclick="GoToNew();">
+		<input type=button class="button" id=gotonew value="ì„¸ê³„ ë‚ ì”¨ ì¡°íšŒí•˜ê¸°" style="font-family:GowunBatang-Regular" onclick="GoToNew();">
 		<br><br>
-		<input type=button class="button" id=gotonew value="°ü±¤Áö ¾Ë¾Æº¸±â" style="font-family:GowunBatang-Regular" onclick="GoToNew();">
+		<input type=button class="button" id=gotonew value="ê´€ê´‘ì§€ ì•Œì•„ë³´ê¸°" style="font-family:GowunBatang-Regular" onclick="GoToNew();">
 		<br><br>
-		<input type=button class="button" id=gotonew value="¼÷¹Ú½Ã¼³ ¾Ë¾Æº¸±â" style="font-family:GowunBatang-Regular" onclick="GoToNew();">
+		<input type=button class="button" id=gotonew value="ìˆ™ë°•ì‹œì„¤ ì•Œì•„ë³´ê¸°" style="font-family:GowunBatang-Regular" onclick="GoToNew();">
 		</div><%
 	} } catch(SQLException ex) {
 		System.err.println("SQLException: "+ex.getMessage()); 
@@ -167,64 +167,64 @@ margin: 0;
       };
 
     var locations = [
-      ['<a href="GetNewCovid.jsp">ÇÑ±¹</a>', 37.5546788, 126.9706069],
-      ['¾Æ¸£ÇîÆ¼³ª',	-36.3,	-60],
-      ['È£ÁÖ',	-35.15,	149.0],
-      ['¿À½ºÆ®¸®¾Æ',	48.12,	16.22],
-   ['ºê¶óÁú',	-15.47,	-47.55],
-     [ 'Ä¯º¸µð¾Æ',	11.33,	104.5],
-      [ 'Ä³³ª´Ù',	45.27,	-75.42],
-    [ 'Ä¥·¹',	-33.24,	-70.4],
-   ['Áß±¹',	39.55,	116.2],
-    [   'Äí¹Ù',	23.08,	-82.22],
-     [  'Ã¼ÄÚ',	50.05,	14.22],
-     [  'Äá°í',	-4.2,	15.15],
-    [   'µ§¸¶Å©',	55.41,	12.34],
-     [  'ÀÌÁýÆ®',	30.01,	31.14],
-     [   'ÇÇÁö',	-18.06,	178.3],
-     [  'ÇÉ¶õµå',	60.15,	25.03],
-    [   'ÇÁ¶û½º',	48.5,	2.2],
-    [   'µ¶ÀÏ',	52.30,	13.25],
-     [  '°¡³ª',	5.35,	-0.06],
-   [    '±×¸®½º',	37.58,	23.46],
-    [   '±×¸°¶õµå',	64.1,	-51.35],
-     [  'Çë°¡¸®',	47.29,	19.05],
-     [  'ÀÎµµ',	28.37,	77.13],
-     [  'ÀÎµµ³×½Ã¾Æ',	-6.09,	106.4],
-    [   '¾ÆÀÏ·£µå',	53.21,	-6.15],
-     [  'ÀÌ½º¶ó¿¤',	31.71,	-35.1],
-   [    'ÀÌÅ»¸®¾Æ',	41.54,	12.29],
-    [   '¶ó¿À½º', 17.58,	102.3],
-   [    '·è¼ÀºÎ¸£Å©',	49.37,	6.09],
-    [   '¸¶Ä«¿À',	22.12,	113.3],
-    [   '¸¶´Ù°¡½ºÄ«¸£',-18.55,	47.31],
-  [     '¸¶ÄÉµµ´Ï¾Æ',	42.01,	21.26],
-  [     '¸»·¹ÀÌ½Ã¾Æ',	3.09,	101.4],
-   [    '¸ôµðºê',	4, 73.28],
-    [   '¸ß½ÃÄÚ',	19.2,	-99.1],
-   [    '³×´ú¶õµå',	52.23,	4.54],
-   [    '´ºÄ®·¹µµ´Ï¾Æ',	-22.17,	166.3],
-   [    '´ºÁú·£µå',	-41.19,	174.4],
- [      '³ë¸£¿þÀÌ',	59.55,	10.45],
- [      'ÆÈ¶ó¿ì',	7.2,	134.2],
- [      'Æä·ç',	-12,	-77],
- [      'ÇÊ¸®ÇÉ',	14.4,	121],
- [      'Æú¶õµå',	52.13,	21],
- [      'Æ÷¸£Åõ°¥',	38.42,	-9.1],
- [      'Ä«Å¸¸£',	25.15,	51.35],
- [      '·ç¸¶´Ï¾Æ',	44.27,	26.1],
- [      '·¯½Ã¾Æ',	55.45,	37.35],
- [      '»ç¿ìµð¾Æ¶óºñ¾Æ',	24.41,	46.42],
-  [     '½ºÆäÀÎ',	40.25,	-3.45],
- [      '½º¿þµ§',	59.2,	18.03],
- [      '½ºÀ§½º',	46.57,	7.28],
- [      'ÅÂ±¹',	13.45,	100.3],
- [      'ÅÍÅ°',	39.57,	32.54],
-  [     '¾Æ¶ø¿¡¹Ì¸®Æ®',	24.28,	54.22],
- [      '¿µ±¹',	51.36,	-0.05],
- [      '¹Ì±¹',	39.91,	-77.02],
- [      'º£³×¼ö¿¤¶ó',	10.3,	-66.55],
- [      'º£Æ®³²',	21.05,	105.5]
+      ['<a href="GetNewCovid.jsp?nation_name=í•œêµ­">í•œêµ­</a>', 37.5546788, 126.9706069],
+      ['ì•„ë¥´í—¨í‹°ë‚˜',	-36.3,	-60],
+      ['í˜¸ì£¼',	-35.15,	149.0],
+      ['ì˜¤ìŠ¤íŠ¸ë¦¬ì•„',	48.12,	16.22],
+   ['ë¸Œë¼ì§ˆ',	-15.47,	-47.55],
+     [ 'ìº„ë³´ë””ì•„',	11.33,	104.5],
+      [ 'ìºë‚˜ë‹¤',	45.27,	-75.42],
+    [ 'ì¹ ë ˆ',	-33.24,	-70.4],
+   ['ì¤‘êµ­',	39.55,	116.2],
+    [   'ì¿ ë°”',	23.08,	-82.22],
+     [  'ì²´ì½”',	50.05,	14.22],
+     [  'ì½©ê³ ',	-4.2,	15.15],
+    [   'ë´ë§ˆí¬',	55.41,	12.34],
+     [  'ì´ì§‘íŠ¸',	30.01,	31.14],
+     [   'í”¼ì§€',	-18.06,	178.3],
+     [  'í•€ëž€ë“œ',	60.15,	25.03],
+    [   'í”„ëž‘ìŠ¤',	48.5,	2.2],
+    [   'ë…ì¼',	52.30,	13.25],
+     [  'ê°€ë‚˜',	5.35,	-0.06],
+   [    'ê·¸ë¦¬ìŠ¤',	37.58,	23.46],
+    [   'ê·¸ë¦°ëž€ë“œ',	64.1,	-51.35],
+     [  'í—ê°€ë¦¬',	47.29,	19.05],
+     [  'ì¸ë„',	28.37,	77.13],
+     [  'ì¸ë„ë„¤ì‹œì•„',	-6.09,	106.4],
+    [   'ì•„ì¼ëžœë“œ',	53.21,	-6.15],
+     [  'ì´ìŠ¤ë¼ì—˜',	31.71,	-35.1],
+   [    'ì´íƒˆë¦¬ì•„',	41.54,	12.29],
+    [   'ë¼ì˜¤ìŠ¤', 17.58,	102.3],
+   [    'ë£©ì…ˆë¶€ë¥´í¬',	49.37,	6.09],
+    [   'ë§ˆì¹´ì˜¤',	22.12,	113.3],
+    [   'ë§ˆë‹¤ê°€ìŠ¤ì¹´ë¥´',-18.55,	47.31],
+  [     'ë§ˆì¼€ë„ë‹ˆì•„',	42.01,	21.26],
+  [     'ë§ë ˆì´ì‹œì•„',	3.09,	101.4],
+   [    'ëª°ë””ë¸Œ',	4, 73.28],
+    [   'ë©•ì‹œì½”',	19.2,	-99.1],
+   [    'ë„¤ëœëž€ë“œ',	52.23,	4.54],
+   [    'ë‰´ì¹¼ë ˆë„ë‹ˆì•„',	-22.17,	166.3],
+   [    'ë‰´ì§ˆëžœë“œ',	-41.19,	174.4],
+ [      'ë…¸ë¥´ì›¨ì´',	59.55,	10.45],
+ [      'íŒ”ë¼ìš°',	7.2,	134.2],
+ [      'íŽ˜ë£¨',	-12,	-77],
+ [      'í•„ë¦¬í•€',	14.4,	121],
+ [      'í´ëž€ë“œ',	52.13,	21],
+ [      'í¬ë¥´íˆ¬ê°ˆ',	38.42,	-9.1],
+ [      'ì¹´íƒ€ë¥´',	25.15,	51.35],
+ [      'ë£¨ë§ˆë‹ˆì•„',	44.27,	26.1],
+ [      'ëŸ¬ì‹œì•„',	55.45,	37.35],
+ [      'ì‚¬ìš°ë””ì•„ë¼ë¹„ì•„',	24.41,	46.42],
+  [     'ìŠ¤íŽ˜ì¸',	40.25,	-3.45],
+ [      'ìŠ¤ì›¨ë´',	59.2,	18.03],
+ [      'ìŠ¤ìœ„ìŠ¤',	46.57,	7.28],
+ [      'íƒœêµ­',	13.45,	100.3],
+ [      'í„°í‚¤',	39.57,	32.54],
+  [     'ì•„ëžì—ë¯¸ë¦¬íŠ¸',	24.28,	54.22],
+ [      'ì˜êµ­',	51.36,	-0.05],
+ [      'ë¯¸êµ­',	39.91,	-77.02],
+ [      'ë² ë„¤ìˆ˜ì—˜ë¼',	10.3,	-66.55],
+ [      'ë² íŠ¸ë‚¨',	21.05,	105.5]
 
     ];
 
@@ -259,7 +259,7 @@ margin: 0;
 
   <div id = "bound">
     <div id="map">
-    	<div align="right">Áöµµ À§ ¸¶Å©¸¦ Å¬¸¯ÇÏ½Ã¸é ÇØ´ç ±¹°¡ÀÇ ÄÚ·Î³ª ¹ß»ý ÇöÈ²À» ¾Ë ¼ö ÀÖ½À´Ï´Ù</div>
+    	<div align="right">ì§€ë„ ìœ„ ë§ˆí¬ë¥¼ í´ë¦­í•˜ì‹œë©´ í•´ë‹¹ êµ­ê°€ì˜ ì½”ë¡œë‚˜ ë°œìƒ í˜„í™©ì„ ì•Œ ìˆ˜ ìžˆìŠµë‹ˆë‹¤</div>
     </div>
   </div>
   

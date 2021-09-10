@@ -5,7 +5,6 @@
 <head><meta charset="UTF-8"><title>해당 국가 탐색 페이지
 </title></head>
 <body>
-
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
 <!-- xml to json xml을 json 형식으로 변경하기 위한 라이브러리를 추가 합니다. -->
