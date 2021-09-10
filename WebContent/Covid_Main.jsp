@@ -7,7 +7,33 @@
 <meta charset="EUC-KR">
 </head>
 <body>
-<div id="title" style="font-weight:bold; font-size:25px; color:gray;" align="center">코로나 여행정보 사이트 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">			
+
+$(document).ready(function geoGet(){
+	$.ajax({
+		url:"https://api.openweathermap.org/data/2.5/onecall",
+		method:"GET",
+		data:{"lat":"37",
+			"lon":"128",
+			"lang":"kr",
+			"units":"metric",
+			"appid":"3bf49017d9d50f294c1795956f5e7e6b"},
+		datatype:"JSON",
+		success: function (geodata){
+			var datahtml="";
+			console.log(geodata);
+			datahtml='<img src="http://openweathermap.org/img/wn/'+geodata.daily[0].weather[0].icon+'@2x.png" width="40px" height="40px" alt="">';
+			datahtml+=geodata.current.weather[0].description;
+			document.getElementById("geoimg").innerHTML=datahtml;
+		} 
+	});
+});
+
+</script>
+
+<span class='s1' id="title" style="font-weight:bold; font-size:25px; color:gray;" align="center">코로나 여행정보 사이트</span> <span id="geoimg" class='s1'></span> 
 <div id="map" style="width:75%; height:75vh; float:left; margin-right:10px"></div>
 <div style="float: left;">
 <%
@@ -56,7 +82,7 @@ try{
 			location.href="CityCovid.jsp";
 		}
 		function GoToWeather() {
-			location.href="CityCovid.jsp";
+			location.href="Weather.jsp";
 		}
 		function GoToPlace() {
 			location.href="CityCovid.jsp";
@@ -77,7 +103,7 @@ try{
 		<br><br>
 		<input type=button class="button" id=gotonew value="국내 지역별 코로나 현황 " style="font-family:GowunBatang-Regular" onclick="GoToCity();">
 		<br><br>
-		<input type=button class="button" id=gotonew value="세계 날씨 조회하기" style="font-family:GowunBatang-Regular" onclick="GoToNew();">
+		<input type=button class="button" id=gotonew value="세계 날씨 조회하기" style="font-family:GowunBatang-Regular" onclick="GoToWeather();">
 		<br><br>
 		<input type=button class="button" id=gotonew value="관광지 알아보기" style="font-family:GowunBatang-Regular" onclick="GoToNew();">
 		<br><br>
@@ -90,7 +116,7 @@ try{
 %>
   <br>
   <p>
-
+  
     <style type="text/css">
       
       #bound {
@@ -116,36 +142,42 @@ try{
       }
       
       @font-face {
-    font-family: 'GowunBatang-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunBatang-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
-.button {
--webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-margin: 0;
-  padding: 0.5rem 1rem;
+  		font-family: 'GowunBatang-Regular';
+    	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunBatang-Regular.woff') format('woff');
+ 	    font-weight: normal;
+    	font-style: normal;
+	  }
 
-  font-size: 1rem;
-  font-weight: 400;
-  text-align: center;
-  text-decoration: none;
+	@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+	
+	.button {
+	-webkit-appearance: none;
+	  -moz-appearance: none;
+	  appearance: none;
+	margin: 0;
+	  padding: 0.5rem 1rem;
+	
+	  font-size: 1rem;
+	  font-weight: 400;
+	  text-align: center;
+	  text-decoration: none;
+	
+	  display: inline-block;
+	  width: auto;
+	
+	  border: none;
+	  border-radius: 4px;
+	  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	
+	  cursor: pointer;
+	
+	  transition: 0.5s;
+	}
 
-  display: inline-block;
-  width: auto;
-
-  border: none;
-  border-radius: 4px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-
-  cursor: pointer;
-
-  transition: 0.5s;
-}
-
+		.s1{
+            display: inline-block;
+            width: 600px;
+        }
 
     </style>
     
