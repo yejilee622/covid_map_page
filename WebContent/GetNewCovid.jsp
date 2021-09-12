@@ -16,6 +16,54 @@
 // 샘플
 // http://apis.result.data[i].go.kr/1262000/TravelAlarmService2/getTravelAlarmList2?serviceKey=sIr4LhoEDOY3RKChgZWZ27TK47a7Sj0TPQtFlVc3OHRpKBnC0ASXWOos9chDrrqOdUhS3Ss958zYZNtuZaAdQA==&pageNo=1&numOfRows=10&cond[country_nm::EQ]=%EA%B0%80%EB%82%98&cond[country_iso_alp2::EQ]=GH
 
+function getImg(){
+
+	$.ajax({
+		url: "http://localhost:8090/GetNationFlag",
+		type: "get",
+		dataType: "JSON",
+		success: function (imgdata) {
+			var nation_name = "";
+			var img_url;
+			
+			var getParameters = function (paramName) { 
+			// 리턴값을 위한 변수 선언 
+			var returnValue; 
+			// 현재 URL 가져오기
+			var url = location.href; 
+			// get 파라미터 값을 가져올 수 있는 ? 를 기점으로 slice 한 후 split 으로 나눔
+			var parameters = (url.slice(url.indexOf('?') + 1, url.length)).split('&'); 
+			// 나누어진 값의 비교를 통해 paramName 으로 요청된 데이터의 값만 return
+			for (var i = 0; i < parameters.length; i++) { 
+				var varName = parameters[i].split('=')[0]; 
+				if (varName.toUpperCase() == paramName.toUpperCase()) { returnValue = parameters[i].split('=')[1]; return decodeURIComponent(returnValue); } } };
+			
+			nation_name=getParameters('nation_name');
+			
+			$.each(imgdata.data, function(i, item){
+				console.log(item.country_nm);
+				if(item.country_nm == nation_name){
+					var covid_data="";
+					nation_name=item.country_nm;
+					console.log(item.flag_download_url);
+					console.log(item.map_download_url);
+					document.getElementById("data_flag").innerHTML="<img src="+item.flag_download_url+" width=60px height=60px>";
+					document.getElementById("data_img").innerHTML="<img src="+item.map_download_url+" width=300px height=300px>";
+				}
+				
+				
+			});
+		},
+		error: function (xhr, o, err){
+			console.log(xhr.status + ":" +o+":"+err);
+			console.log(xhr.responseText);
+		}
+
+	});
+	
+}
+getImg();		
+		
 // 코로나 발생 현황 데이터 가지고 오기
 function getCovidData(){
 
@@ -43,7 +91,7 @@ function getCovidData(){
 				if (varName.toUpperCase() == paramName.toUpperCase()) { returnValue = parameters[i].split('=')[1]; return decodeURIComponent(returnValue); } } };
 			
 			nation_name=getParameters('nation_name');
-			
+
 			$.each(items, function(index, item){
 				console.log(item.areaNm);
 				if(item.nationNm == nation_name){
@@ -76,7 +124,7 @@ getCovidData();
       /* Optional: Makes the sample page fill the window. */
       html,
       body {
-      	background: #F4D4E7;
+      	background: #ffc0cb;
         height: 100%;
         margin: 0;
         padding: 0;
@@ -91,14 +139,14 @@ getCovidData();
 }
     </style>
 
-==========================================<br>
+==========================================
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="https://opendata.mofa.go.kr:8444/fileDownload/images/country_images/flags/16/20201125_211131298.gif" width=60px height=60px></a>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<div id="data_flag"></div>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 해당 국가의 코로나 발생 현황 입니다<a>
 <br>
 ==========================================<br>
-<a><img src="https://opendata.mofa.go.kr:8444/fileDownload/images/country_images/maps/15/20201124_221534093.png" width=300px height=300px></a>
+<div id="data_img"></div>
 <br> <table width="35%" border> 
 <tr><td>대륙명</td>
 <td><div id="data_Ar"></div></td>

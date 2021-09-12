@@ -54,7 +54,7 @@ $(document).ready(function geoGet(){
       /* Optional: Makes the sample page fill the window. */
       html,
       body {
-      	background: #F4D4E7;
+      	background: #ffc0cb;
         height: 100%;
         margin: 0;
         padding: 0;

@@ -63,7 +63,6 @@
       };
 
     var locations = [
-      ['<a href="GetNewCovid.jsp">대한민국</a>', 37.5546788, 126.9706069],
       ['서울', 37.54, 127.22],
       ['경기', 37.36, 127.33],
       ['강원', 37.71, 128.2],
@@ -118,6 +117,8 @@
 			success: function (data) {
 				var jsonData = parser.parse(data);
 				var dataHtml="";
+				var dataHtml2="<br><br>국내 지역 "+cityname+"의 코로나 현황입니다<br><br>";
+				document.getElementById("city").innerHTML=dataHtml2;
 				
 				// 국가별 코로나 현황 리스트
 				var items = jsonData.response.body.items.item; 
@@ -166,8 +167,6 @@
 							dataHtml+="</tr>";
 							dataHtml+="<tr>";
 							dataHtml+="</table>";
-							dataHtml+="<br>";
-							dataHtml+="<br>";
 						}
 				});
 				
@@ -183,6 +182,8 @@
     </script>
   </head>
   <body>
+  <div id="city"></div>
+  <br>
     <div id="map"> <div id="CityData"></div></div>
 지도 위 마크를 클릭하시면 해당 지역의 코로나 발생 현황을 알 수 있습니다
 
@@ -203,7 +204,7 @@
       /* Optional: Makes the sample page fill the window. */
       html,
       body {
-      	background: #F4D4E7;
+      	background: #ffc0cb;
         height: 100%;
         margin: 0;
         padding: 0;

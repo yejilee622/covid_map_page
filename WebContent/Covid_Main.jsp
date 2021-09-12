@@ -33,7 +33,8 @@ $(document).ready(function geoGet(){
 
 </script>
 
-<span class='s1' id="title" style="font-weight:bold; font-size:25px; color:gray;" align="center">코로나 여행정보 사이트</span> <span id="geoimg" class='s1'></span> 
+<span class='s1' id="title" style="font-weight:bold; font-size:25px; color:gray;" align="right">코로나 여행정보 사이트</span>
+<span id=hi class='s2' style="font-size:15px; color:gray" align="right">현재 날씨 </span> <span id="geoimg" class='s3'></span> 
 <div id="map" style="width:75%; height:75vh; float:left; margin-right:10px"></div>
 <div style="float: left;">
 <%
@@ -134,7 +135,7 @@ try{
       /* Optional: Makes the sample page fill the window. */
       html,
       body {
-      	background: #F4D4E7;
+      	background: #ffc0cb;
         height: 100%;
         margin: 0;
         padding: 0;
@@ -177,6 +178,16 @@ try{
 		.s1{
             display: inline-block;
             width: 600px;
+        }
+        
+        .s2{
+        	display: inline-block;
+        	width: 200px;
+        }
+        
+        .s3{
+        	display: inline-block;
+        	width: 200px;
         }
 
     </style>
@@ -290,9 +301,7 @@ try{
   <body>
 
   <div id = "bound">
-    <div id="map">
     	<div align="right">지도 위 마크를 클릭하시면 해당 국가의 코로나 발생 현황을 알 수 있습니다</div>
-    </div>
   </div>
   
   <div id="myname"></div>
