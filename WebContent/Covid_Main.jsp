@@ -86,13 +86,10 @@ try{
 			location.href="Weather.jsp";
 		}
 		function GoToPlace() {
-			location.href="CityCovid.jsp";
+			location.href="place_check.jsp";
 		}
 		function GoToStay() {
 			location.href="CityCovid.jsp";
-		}
-		function a(ctn) {
-			location.href="GetNewCovid.jsp?nation_name"+encodeURI(ctn,"UTF-8");
 		}
 		</script>
 		<br>
@@ -106,7 +103,7 @@ try{
 		<br><br>
 		<input type=button class="button" id=gotonew value="세계 날씨 조회하기" style="font-family:GowunBatang-Regular" onclick="GoToWeather();">
 		<br><br>
-		<input type=button class="button" id=gotonew value="관광지 알아보기" style="font-family:GowunBatang-Regular" onclick="GoToNew();">
+		<input type=button class="button" id=gotonew value="관광지 알아보기" style="font-family:GowunBatang-Regular" onclick="GoToPlace();">
 		<br><br>
 		<input type=button class="button" id=gotonew value="숙박시설 알아보기" style="font-family:GowunBatang-Regular" onclick="GoToNew();">
 		</div><%

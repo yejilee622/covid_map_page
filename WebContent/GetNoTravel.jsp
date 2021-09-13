@@ -1,22 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>ÄÚ·Î³ª ¿©ÇàÁ¤º¸</title>
+<title>ì½”ë¡œë‚˜ ì—¬í–‰ì •ë³´</title>
 
 </head>
 <body>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
-<!-- xml to json xmlÀ» json Çü½ÄÀ¸·Î º¯°æÇÏ±â À§ÇÑ ¶óÀÌºê·¯¸®¸¦ Ãß°¡ ÇÕ´Ï´Ù. -->
+<!-- xml to json xmlì„ json í˜•ì‹ìœ¼ë¡œ ë³€ê²½í•˜ê¸° ìœ„í•œ ë¼ì´ë¸ŒëŸ¬ë¦¬ë¥¼ ì¶”ê°€ í•©ë‹ˆë‹¤. -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fast-xml-parser/3.19.0/parser.min.js"></script>
 ==================================================<br>
-¾Æ·¡ ÇØ´ç ±¹°¡µéÀº 2Â÷ ¹é½Å Á¢Á¾ ¿Ï·á¿¡µµ<br>
-°İ¸® ¸éÁ¦°¡ Àû¿ëµÇÁö ¾Ê´Â ±¹°¡µéÀÔ´Ï´Ù (2021.09 ¿Ü±³ºÎ ÇØ¿Ü¾ÈÀü¿©Çà)<br>
+ì•„ë˜ í•´ë‹¹ êµ­ê°€ë“¤ì€ 2ì°¨ ë°±ì‹  ì ‘ì¢… ì™„ë£Œì—ë„<br>
+ê²©ë¦¬ ë©´ì œê°€ ì ìš©ë˜ì§€ ì•ŠëŠ” êµ­ê°€ë“¤ì…ë‹ˆë‹¤ (2021.09 ì™¸êµë¶€ í•´ì™¸ì•ˆì „ì—¬í–‰)<br>
 ==================================================<br>
 
 <%
@@ -73,12 +73,12 @@ try{
 						
 						nation_name=getParameters('nation_name');
 						
-						// ±¹°¡º° ÄÚ·Î³ª ÇöÈ² ¸®½ºÆ®
+						// êµ­ê°€ë³„ ì½”ë¡œë‚˜ í˜„í™© ë¦¬ìŠ¤íŠ¸
 						var items = jsonData.response.body.items.item; 
 						
 						$.each(items, function(index, item){
 							if(nation_name==item.nationNm) {
-								dataHtml+=nation_name+"Àº °İ¸®¸éÁ¦ ±¹°¡¿¡ ÇØ´çµÇÁö ¾Ê½À´Ï´Ù<br><br>";
+								dataHtml+=nation_name+"ì€ ê²©ë¦¬ë©´ì œ êµ­ê°€ì— í•´ë‹¹ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤<br><br>";
 							}
 						}) 
 						
@@ -86,23 +86,23 @@ try{
 							$.each(countryList, function(i, countryname){
 								if(countryname==item.nationNm) {
 									dataHtml+="<table width='50%' border>"; 
-									dataHtml+="<tr><td>´ë·ú¸í</td>";
+									dataHtml+="<tr><td>ëŒ€ë¥™ëª…</td>";
 									dataHtml+="<td><div id='data_Ar'>"+item.areaNm+"</div></td>";
 									dataHtml+="</tr>";
 									dataHtml+="<tr>";
-									dataHtml+="<td>±¹°¡¸í</td>";
+									dataHtml+="<td>êµ­ê°€ëª…</td>";
 									dataHtml+="<td><div id='data_Nm'>"+item.nationNm+"</div></td>";
 									dataHtml+="</tr>";
 									dataHtml+="<tr>";
-									dataHtml+="<td>ÃÑ »ç¸ÁÀÚ ¼ö</td>";
+									dataHtml+="<td>ì´ ì‚¬ë§ì ìˆ˜</td>";
 									dataHtml+="<td><div id='data_Dt'>"+item.natDeathCnt+"</div></td>";
 									dataHtml+="</tr>";
 									dataHtml+="<tr>";
-									dataHtml+="<td>ÃÑ È®ÁøÀÚ ¼ö</td>";
+									dataHtml+="<td>ì´ í™•ì§„ì ìˆ˜</td>";
 									dataHtml+="<td><div id='data_Kt'>"+item.natDefCnt+"</div></td>";
 									dataHtml+="</tr>";
 									dataHtml+="<tr>";
-									dataHtml+="<td>È®Áø·ü ´ëºñ »ç¸Á·ü(¹éºĞÀ²)</td>";
+									dataHtml+="<td>í™•ì§„ë¥  ëŒ€ë¹„ ì‚¬ë§ë¥ (ë°±ë¶„ìœ¨)</td>";
 									dataHtml+="<td><div id='data_Br'>"+item.natDeathRate+"</div></td>";
 									dataHtml+="</tr>";
 									dataHtml+="</table>";

@@ -2,42 +2,75 @@
 <script type="text/javascript">	
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-let map;
-let service;
-let infowindow;
+//This example requires the Places library. Include the libraries=places
 
 function initMap() {
-  const sydney = new google.maps.LatLng(-33.867, 151.195);
-  infowindow = new google.maps.InfoWindow();
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: sydney,
-    zoom: 15,
-  });
-  const request = {
-    query: "서울",
-    fields: ["name", "geometry"],
-  };
-  service = new google.maps.places.PlacesService(map);
-  service.findPlaceFromQuery(request, (results, status) => {
-    if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-      for (let i = 0; i < results.length; i++) {
-        createMarker(results[i]);
-      }
-      map.setCenter(results[0].geometry.location);
-    }
-  });
+// Create the map.
+const pyrmont = { lat: -33.866, lng: 151.196 };
+const map = new google.maps.Map(document.getElementById("map"), {
+ center: pyrmont,
+ zoom: 17,
+ mapId: "8d193001f940fde3",
+});
+// Create the places service.
+const service = new google.maps.places.PlacesService(map);
+let getNextPage;
+const moreButton = document.getElementById("more");
+
+moreButton.onclick = function () {
+ moreButton.disabled = true;
+ if (getNextPage) {
+   getNextPage();
+ }
+};
+
+// Perform a nearby search.
+service.nearbySearch(
+ { location: pyrmont, radius: 500, type: "store" },
+ (results, status, pagination) => {
+   if (status !== "OK" || !results) return;
+
+   addPlaces(results, map);
+   moreButton.disabled = !pagination || !pagination.hasNextPage;
+   if (pagination && pagination.hasNextPage) {
+     getNextPage = () => {
+       // Note: nextPage will call the same handler function as the initial call
+       pagination.nextPage();
+     };
+   }
+ }
+);
 }
 
-function createMarker(place) {
-  if (!place.geometry || !place.geometry.location) return;
-  const marker = new google.maps.Marker({
-    map,
-    position: place.geometry.location,
-  });
-  google.maps.event.addListener(marker, "click", () => {
-    infowindow.setContent(place.name || "");
-    infowindow.open(map, marker);
-  });
+function addPlaces(places, map) {
+const placesList = document.getElementById("places");
+
+for (const place of places) {
+ if (place.geometry && place.geometry.location) {
+   const image = {
+     url: place.icon,
+     size: new google.maps.Size(71, 71),
+     origin: new google.maps.Point(0, 0),
+     anchor: new google.maps.Point(17, 34),
+     scaledSize: new google.maps.Size(25, 25),
+   };
+
+   new google.maps.Marker({
+     map,
+     icon: image,
+     title: place.name,
+     position: place.geometry.location,
+   });
+
+   const li = document.createElement("li");
+
+   li.textContent = place.name;
+   placesList.appendChild(li);
+   li.addEventListener("click", () => {
+     map.setCenter(place.geometry.location);
+   });
+ }
+}
 }
 </script>
 <style>
@@ -56,10 +89,11 @@ body {
 <html>
   <head>
     <title>Place Searches</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
   </head>
   <body>
     <div id="map"></div>
+    <div id="li"></div>
 
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
     <script
