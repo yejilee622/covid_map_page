@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>코로나 여행정보</title>
+<title>격리 면제 제외 국가 탐색</title>
 
 </head>
 <body>
@@ -14,11 +14,12 @@
 
 <!-- xml to json xml을 json 형식으로 변경하기 위한 라이브러리를 추가 합니다. -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fast-xml-parser/3.19.0/parser.min.js"></script>
+<div align=center>
 ==================================================<br>
 아래 해당 국가들은 2차 백신 접종 완료에도<br>
 격리 면제가 적용되지 않는 국가들입니다 (2021.09 외교부 해외안전여행)<br>
 ==================================================<br>
-
+</div>
 <%
 	String test = "";
 	Connection myConn = null; Statement stmt=null;
@@ -78,7 +79,7 @@ try{
 						
 						$.each(items, function(index, item){
 							if(nation_name==item.nationNm) {
-								dataHtml+=nation_name+"은 격리면제 국가에 해당되지 않습니다<br><br>";
+								dataHtml+=nation_name+"은(는) 격리면제 국가에 해당되지 않습니다<br><br>";
 							}
 						}) 
 						
@@ -135,7 +136,7 @@ try{
 %>
 <p>
 
-<div id="NoTravel" width=700 height=700>
+<div id="NoTravel" width=700 height=700 align=center>
 </div>
 
   <style type="text/css">
@@ -143,7 +144,6 @@ try{
       /* Optional: Makes the sample page fill the window. */
       html,
       body {
-      	background: #ffc0cb;
         height: 100%;
         margin: 0;
         padding: 0;

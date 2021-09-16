@@ -15,8 +15,8 @@ $(document).ready(function geoGet(){
 	$.ajax({
 		url:"https://api.openweathermap.org/data/2.5/onecall",
 		method:"GET",
-		data:{"lat":"37",
-			"lon":"128",
+		data:{"lat":"37.525",
+			"lon":"126.928",
 			"lang":"kr",
 			"units":"metric",
 			"appid":"3bf49017d9d50f294c1795956f5e7e6b"},
@@ -88,8 +88,8 @@ try{
 		function GoToPlace() {
 			location.href="place_check.jsp";
 		}
-		function GoToStay() {
-			location.href="CityCovid.jsp";
+		function GoToFly() {
+			location.href="Boarding.jsp";
 		}
 		</script>
 		<br>
@@ -105,7 +105,7 @@ try{
 		<br><br>
 		<input type=button class="button" id=gotonew value="관광지 알아보기" style="font-family:GowunBatang-Regular" onclick="GoToPlace();">
 		<br><br>
-		<input type=button class="button" id=gotonew value="숙박시설 알아보기" style="font-family:GowunBatang-Regular" onclick="GoToNew();">
+		<input type=button class="button" id=gotonew value="항공권 검색하기" style="font-family:GowunBatang-Regular" onclick="GoToFly();">
 		</div><%
 	} } catch(SQLException ex) {
 		System.err.println("SQLException: "+ex.getMessage()); 
@@ -132,7 +132,6 @@ try{
       /* Optional: Makes the sample page fill the window. */
       html,
       body {
-      	background: #ffc0cb;
         height: 100%;
         margin: 0;
         padding: 0;
@@ -269,7 +268,7 @@ try{
     ];
 
     var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 1.4,
+      zoom: 1.6,
       center: myLatLng,
     });
 

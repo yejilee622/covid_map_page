@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>국내 지역별 코로나 현황</title>
 </head>
 <body>
 
@@ -204,7 +204,6 @@
       /* Optional: Makes the sample page fill the window. */
       html,
       body {
-      	background: #ffc0cb;
         height: 100%;
         margin: 0;
         padding: 0;

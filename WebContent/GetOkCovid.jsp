@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>해외여행 가능 국가 탐색</title>
 </head>
 <body>
 
@@ -15,7 +15,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fast-xml-parser/3.19.0/parser.min.js"></script>
 
 
-<div id="map" style="width:70%; height:95vh; float:left; margin-right:10px"></div>
+<div id="map" style="width:65%; height:95vh; float:left; margin-right:10px"></div>
   <style type="text/css">
       
       
@@ -54,47 +54,89 @@
     
    <%
 	String test = "";
-	Connection myConn = null; Statement stmt=null;
-	ResultSet myResultSet = null; String mySQL ="";
-	String dburl="jdbc:oracle:thin:@localhost:1521/xe";
-	String user="db1610479"; String passwd="oracle";
+    String test2 = "";
+    String test3 = "";
+    String test4 = "";
+    String test5 = "";
+ 	Connection myConn = null; 
+	Statement stmt = null;
+	Statement stmt2 = null;
+	ResultSet myResultSet = null; 
+	ResultSet myResultSet2 = null;
+	String mySQL = "";
+	String mySQL2 = "";
+	String dburl= "jdbc:oracle:thin:@localhost:1521/xe";
+	String user= "db1610479"; String passwd="oracle";
 	String dbdriver = "oracle.jdbc.driver.OracleDriver";
 	
 	try{
 		Class.forName(dbdriver);
 		myConn = DriverManager.getConnection(dburl, user, passwd);
 		stmt = myConn.createStatement();
+		stmt2 = myConn.createStatement();
 	} catch(SQLException ex) {
 		System.err.println("SQLException: "+ex.getMessage());
 	}
 	mySQL="select NATION_NM, ISOLATION_OK from OK_TRAVEL_2021_09";
+	mySQL2="select COUN_NM, COUN_LAT, COUN_LONG from COUNTRY where COUN_NM IN (select NATION_NM from OK_TRAVEL_2021_09)";
 try{
+	myResultSet2 = stmt2.executeQuery(mySQL2);
+	if(myResultSet2 != null) {
+		while(myResultSet2.next()) {
+			String coun_nm = myResultSet2.getString("COUN_NM");
+			String coun_lat = myResultSet2.getString("COUN_LAT");
+			String coun_long = myResultSet2.getString("COUN_LONG");
+			test3 += coun_nm+",";
+			test4 += coun_lat+",";
+			test5 += coun_long+",";
+		}
+	}
 	myResultSet = stmt.executeQuery(mySQL);
 	if(myResultSet != null) {
-		int i=0;
 		while(myResultSet.next()) {
 			String c_nm_no = myResultSet.getString("NATION_NM");
-			String str[] = new String[200];
+			String c_nm_no2 = myResultSet.getString("ISOLATION_OK");
 			test += c_nm_no+",";
-			str[i]=c_nm_no;
-			}%>
+			test2 += c_nm_no2+",";
+			}
+			%>
 		<script type="text/javascript">		
+		
+		let countryStr = "<%=test%>";
+		let countryList = countryStr.split(",");
+		let countryStr2 = "<%=test2%>";
+		let countryList2 = countryStr2.split(",");
+		let countryStr3 = "<%=test3%>";
+		let countryList3 = countryStr3.split(",");
+		let latStr = "<%=test4%>";
+		let latList = latStr.split(",");
+		let longStr = "<%=test5%>";
+		let longList = longStr.split(",");
+		
+		let locationy = new Array(countryList3.length);
+		let three = new Array(3);
+		
+
+		for (var i=0; i<locationy.length; i++) {
+			var t=latList[i];
+			t *= 1;
+			var y=longList[i];
+			y *= 1;
+			three = [countryList3[i], t, y];
+			locationy[i] = three;
+		}
+				
 			function getCovidData(country_name){
-				var countryStr = "<%=test%>";
-				var countryList = countryStr.split(",");
-				console.log(countryList, countryList);
-				var countryStr2 = "<%=test2%>";
-				var countryList2 = countryStr2.split(",");
-				console.log(countryList2, countryList2);
+				let dataHtml="";
 				$.ajax({
 					url: "http://localhost:8090/GetCovidData",
 					type: "get",
 					dataType: "text",
 					success: function (data) {
 						var jsonData = parser.parse(data);
-						var dataHtml="";
-						var nation_name = "";
-					
+						
+						var nation_name="";
+						
 						var items = jsonData.response.body.items.item; 
 						
 						var getParameters = function (paramName) { 
@@ -107,15 +149,31 @@ try{
 						
 						nation_name=getParameters('nation_name');
 						
-						$.each(items, function(index, item){
-							if(nation_name==item.nationNm) {
-								dataHtml+=nation_name+"은 해외여행 가능 국가에 해당됩니다<br><br>";
+						
+						for(var i=0;i<countryList3.length;i++) {
+							if(nation_name==countryList3[i]) {
+								dataHtml+="<br>"+nation_name+"은(는) 해외여행 가능 국가에 해당됩니다<br>";
+								dataHtml+="해당 국가 내에서의 격리 여부: "+countryList2[i]+"<br>";
+								break;
 							}
-						}) 
+							if(i>=countryList3.length) {
+								dataHtml+="<br>"+nation_name+"은(는) 해외여행 가능 국가에 해당되지 않습니다<br>";
+							}
+						}
+						
+						for(var i=0;i<countryList3.length;i++) {
+							if(nation_name==country_name) break;
+							if(country_name==countryList3[i]) {
+								dataHtml+="<br>"+country_name+"은(는) 해외여행 가능 국가에 해당됩니다<br>";
+								dataHtml+="해당 국가 내에서의 격리 여부: "+countryList2[i]+"<br>";
+							}
+						}
+						
+						 
 						
 						$.each(items, function(index, item){
-								if(countryname==item.nationNm) {
-									dataHtml+="<table width='50%' border>"; 
+								if(country_name==item.nationNm) {
+									dataHtml+="<br><table width='30%' border>"; 
 									dataHtml+="<tr><td>대륙명</td>";
 									dataHtml+="<td><div id='data_Area'>"+item.areaNm+"</div></td>";
 									dataHtml+="</tr>";
@@ -152,37 +210,14 @@ try{
 				
 			}
 			
-			getCovidData();
-			
 			function initMap() {
 			      const myLatLng = {
 			        lat: 36.17,
 			        lng: 126.9
 			      };
-
-			    var locations = [
-			      ['서울', 37.54, 127.22],
-			      ['경기', 37.36, 127.33],
-			      ['강원', 37.71, 128.2],
-			      ['충남', 36.17, 126.9],
-			      ['충북', 36.77, 127.7],
-			      ['전남', 34.86, 126.92],
-			      ['전북', 35.7, 127.28],
-			      ['경남', 35.5, 128.43],
-			      ['경북', 36.33, 128.52],
-			      ['세종', 36.56, 127.24],
-			      ['인천', 37.34, 126.65],
-			      ['대구', 35.81, 128.6],
-			      ['부산', 35.14, 129.05],
-			      ['제주', 33.30, 126.48],
-			      ['대전', 36.3, 127.42],
-			      ['울산', 35.53, 129.26],
-			      ['광주', 35.15, 126.95]
-
-			    ];
-
+				
 			    var map = new google.maps.Map(document.getElementById('map'), {
-			      zoom: 1.7,
+			      zoom: 1.63,
 			      center: myLatLng,
 			    });
 
@@ -190,17 +225,17 @@ try{
 
 			    var marker, i;
 
-			    for (i = 0; i < locations.length; i++) {  
+			    for (i = 0; i < locationy.length; i++) {  
 			      marker = new google.maps.Marker({
-			        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+			        position: new google.maps.LatLng(locationy[i][1], locationy[i][2]),
 			        map: map
 			      });
 
 			      google.maps.event.addListener(marker, 'click', (function(marker, i) {
 			        return function() {
-			          infowindow.setContent(locations[i][0]);
+			          infowindow.setContent(locationy[i][0]);
 			          infowindow.open(map, marker);
-			          getCovidData(locations[i][0]);
+			          getCovidData(locationy[i][0]);
 			        }
 
 			      })(marker, i));
@@ -222,7 +257,6 @@ try{
     <div id="map"> <div id="OkTravel"></div></div>
 지도 위 마크를 클릭하시면 <br> 해당 국가의 코로나 발생 현황을 알 수 있습니다
 
-
 <div id="data_Area"></div>
 <div id="data_Name"></div>
 <div id="data_Death"></div>
@@ -234,7 +268,6 @@ try{
       /* Optional: Makes the sample page fill the window. */
       html,
       body {
-      	background: #ffc0cb;
         height: 100%;
         margin: 0;
         padding: 0;

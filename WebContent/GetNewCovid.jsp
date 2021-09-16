@@ -2,8 +2,9 @@
 <%response.setHeader("Access-Control-Allow-Origin","*"); %> 
 <!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><title>해당 국가 탐색 페이지
-</title></head>
+<head><meta charset="UTF-8"><title>해당 국가 탐색 페이지</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+</head>
 <body>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
@@ -41,12 +42,12 @@ function getImg(){
 			nation_name=getParameters('nation_name');
 			
 			$.each(imgdata.data, function(i, item){
-				console.log(item.country_nm);
+				//console.log(item.country_nm);
 				if(item.country_nm == nation_name){
 					var covid_data="";
 					nation_name=item.country_nm;
-					console.log(item.flag_download_url);
-					console.log(item.map_download_url);
+				//	console.log(item.flag_download_url);
+				//	console.log(item.map_download_url);
 					document.getElementById("data_flag").innerHTML="<img src="+item.flag_download_url+" width=60px height=60px>";
 					document.getElementById("data_img").innerHTML="<img src="+item.map_download_url+" width=300px height=300px>";
 				}
@@ -91,22 +92,22 @@ function getCovidData(){
 				if (varName.toUpperCase() == paramName.toUpperCase()) { returnValue = parameters[i].split('=')[1]; return decodeURIComponent(returnValue); } } };
 			
 			nation_name=getParameters('nation_name');
-
-			$.each(items, function(index, item){
-				console.log(item.areaNm);
-				if(item.nationNm == nation_name){
-					var covid_data="";
-					nation_name=item.nationNm;
-					console.log(item.nationNm + '의 확진자 현황');
-					document.getElementById("data_Nm").innerHTML=item.nationNm;
-					document.getElementById("data_Ar").innerHTML=item.areaNm;
-					document.getElementById("data_Dt").innerHTML=item.natDeathCnt;
-					document.getElementById("data_Kt").innerHTML=item.natDefCnt;
-					document.getElementById("data_Br").innerHTML=item.natDeathRate;
+			
+				for (const item of items) {
+					//console.log(item.nationNm, nation_name);
+					  if(item.nationNm == nation_name){
+							var covid_data="";
+							nation_name=item.nationNm;
+							console.log(item.nationNm + '의 확진자 현황');
+							document.getElementById("data_Nm").innerHTML=item.nationNm;
+							document.getElementById("data_Ar").innerHTML=item.areaNm;
+							document.getElementById("data_Dt").innerHTML=item.natDeathCnt;
+							document.getElementById("data_Kt").innerHTML=item.natDefCnt;
+							document.getElementById("data_Br").innerHTML=item.natDeathRate;
+							break;
+						}
 				}
-				
-				
-			});
+
 		},
 		error: function (xhr, o, err){
 			console.log(xhr.status + ":" +o+":"+err);
@@ -124,7 +125,8 @@ getCovidData();
       /* Optional: Makes the sample page fill the window. */
       html,
       body {
-      	background: #ffc0cb;
+        align:center;
+      
         height: 100%;
         margin: 0;
         padding: 0;
@@ -139,35 +141,35 @@ getCovidData();
 	}
 
     </style>
-
-==========================================
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<div id="data_flag"></div>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-해당 국가의 코로나 발생 현황 입니다<br>
-==========================================<br>
-<div id="data_img"></div>
-<br> <table width="35%" border> 
-<tr><td>대륙명</td>
-<td><div id="data_Ar"></div></td>
-</tr>
-<tr>
-<td>국가명</td>
-<td><div id="data_Nm"></div></td>
-</tr>
-<tr>
-<td>총 사망자 수</td>
-<td><div id="data_Dt"></div></td>
-</tr>
-<tr>
-<td>총 확진자 수</td>
-<td><div id="data_Kt"></div></td>
-</tr>
-<tr>
-<td>확진률 대비 사망률(백분율)</td>
-<td><div id="data_Br"></div></td>
-</tr>
-</table>
-
+<div align=center width="70%">
+	==========================================
+	<div id="data_flag" align=center></div>
+	해당 국가의 코로나 발생 현황 입니다<br>
+	==========================================<br>
+	<div id="data_img"></div>
+	<br> 
+	
+	<table class=" table-striped table-sm"> 
+		<tr><td>대륙명</td>
+		<td><div id="data_Ar"></div></td>
+		</tr>
+		<tr>
+		<td>국가명</td>
+		<td><div id="data_Nm"></div></td>
+		</tr>
+		<tr>
+		<td>총 사망자 수</td>
+		<td><div id="data_Dt"></div></td>
+		</tr>
+		<tr>
+		<td>총 확진자 수</td>
+		<td><div id="data_Kt"></div></td>
+		</tr>
+		<tr>
+		<td>확진률 대비 사망률(백분율)</td>
+		<td><div id="data_Br"></div></td>
+		</tr>
+	</table>
+</div>
 </body>
 </html>
