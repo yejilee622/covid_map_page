@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>국내 지역별 코로나 현황</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
 </head>
 <body>
 
@@ -126,7 +128,7 @@
 				$.each(items, function(index, item){
 					console.log(item.gubun);
 						if(item.gubun==cityname) {
-							dataHtml+="<table width='50%' border>"; 
+							dataHtml+='<table class="table-striped table-sm" width="30%">'; 
 							dataHtml+="<tr><td>시도명</td>";
 							dataHtml+="<td><div id='City_a'>"+item.gubun+"</div></td>";
 							dataHtml+="</tr>";

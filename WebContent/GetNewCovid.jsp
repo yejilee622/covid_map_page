@@ -76,7 +76,7 @@ function getCovidData(){
 			var jsonData = parser.parse(data);
 			var nation_name = "";
 			var img_url;
-			
+
 			// 국가별 코로나 현황 리스트
 			var items = jsonData.response.body.items.item; 
 			var getParameters = function (paramName) { 
@@ -92,6 +92,10 @@ function getCovidData(){
 				if (varName.toUpperCase() == paramName.toUpperCase()) { returnValue = parameters[i].split('=')[1]; return decodeURIComponent(returnValue); } } };
 			
 			nation_name=getParameters('nation_name');
+			
+			for (const item of items) {
+				console.log(item.nationNm);
+			}
 			
 				for (const item of items) {
 					//console.log(item.nationNm, nation_name);
@@ -149,7 +153,7 @@ getCovidData();
 	<div id="data_img"></div>
 	<br> 
 	
-	<table class=" table-striped table-sm"> 
+	<table class="table-striped table-sm"> 
 		<tr><td>대륙명</td>
 		<td><div id="data_Ar"></div></td>
 		</tr>

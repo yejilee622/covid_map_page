@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>해외여행 가능 국가 탐색</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
 </head>
 <body>
 
@@ -16,6 +18,15 @@
 
 
 <div id="map" style="width:65%; height:95vh; float:left; margin-right:10px"></div>
+<div id="OkTravel"></div></div>
+   
+지도 위 마크를 클릭하시면 <br> 해당 국가의 코로나 발생 현황을 알 수 있습니다
+
+<div id="data_Area"></div>
+<div id="data_Name"></div>
+<div id="data_Death"></div>
+<div id="data_Covid"></div>
+<div id="data_Rate"></div>
   <style type="text/css">
       
       
@@ -66,7 +77,7 @@
 	String mySQL = "";
 	String mySQL2 = "";
 	String dburl= "jdbc:oracle:thin:@localhost:1521/xe";
-	String user= "db1610479"; String passwd="oracle";
+	String user= "db1610479"; String passwd="casiopea86";
 	String dbdriver = "oracle.jdbc.driver.OracleDriver";
 	
 	try{
@@ -117,7 +128,7 @@ try{
 		let three = new Array(3);
 		
 
-		for (var i=0; i<locationy.length; i++) {
+		for (var i=0; i<locationy.length-1; i++) {
 			var t=latList[i];
 			t *= 1;
 			var y=longList[i];
@@ -125,9 +136,37 @@ try{
 			three = [countryList3[i], t, y];
 			locationy[i] = three;
 		}
-				
+		
+		var nation_name="";
+		var getParameters = function (paramName) { 
+		var returnValue; 
+		var url = location.href; 
+		var parameters = (url.slice(url.indexOf('?') + 1, url.length)).split('&'); 
+		for (var i = 0; i < parameters.length; i++) { 
+			var varName = parameters[i].split('=')[0]; 
+			if (varName.toUpperCase() == paramName.toUpperCase()) { returnValue = parameters[i].split('=')[1]; return decodeURIComponent(returnValue); } } };
+		
+		nation_name=getParameters('nation_name');
+		
+		let dataHtml="";
+		
+		for(var i=0;i<countryList3.length;i++) {
+			if(nation_name==countryList3[i]) {
+				dataHtml+="<br>"+nation_name+"은(는) 해외여행 가능 국가에 해당됩니다<br>";
+				dataHtml+="해당 국가 내에서의 격리 여부: "+countryList2[i]+"<br>";
+				break;
+			}
+			if(i>=countryList3.length-1) {
+				dataHtml+="<br>"+nation_name+"은(는) 해외여행 가능 국가에 해당되지 않습니다<br>";
+			}
+		}
+
+		document.getElementById("OkTravel").innerHTML = dataHtml;
+		
 			function getCovidData(country_name){
-				let dataHtml="";
+				
+				dataHtml = "";
+				
 				$.ajax({
 					url: "http://localhost:8090/GetCovidData",
 					type: "get",
@@ -135,45 +174,19 @@ try{
 					success: function (data) {
 						var jsonData = parser.parse(data);
 						
-						var nation_name="";
-						
-						var items = jsonData.response.body.items.item; 
-						
-						var getParameters = function (paramName) { 
-						var returnValue; 
-						var url = location.href; 
-						var parameters = (url.slice(url.indexOf('?') + 1, url.length)).split('&'); 
-						for (var i = 0; i < parameters.length; i++) { 
-							var varName = parameters[i].split('=')[0]; 
-							if (varName.toUpperCase() == paramName.toUpperCase()) { returnValue = parameters[i].split('=')[1]; return decodeURIComponent(returnValue); } } };
-						
-						nation_name=getParameters('nation_name');
-						
-						
-						for(var i=0;i<countryList3.length;i++) {
-							if(nation_name==countryList3[i]) {
-								dataHtml+="<br>"+nation_name+"은(는) 해외여행 가능 국가에 해당됩니다<br>";
-								dataHtml+="해당 국가 내에서의 격리 여부: "+countryList2[i]+"<br>";
-								break;
-							}
-							if(i>=countryList3.length) {
-								dataHtml+="<br>"+nation_name+"은(는) 해외여행 가능 국가에 해당되지 않습니다<br>";
-							}
-						}
+						var items = jsonData.response.body.items.item; 		
 						
 						for(var i=0;i<countryList3.length;i++) {
 							if(nation_name==country_name) break;
 							if(country_name==countryList3[i]) {
 								dataHtml+="<br>"+country_name+"은(는) 해외여행 가능 국가에 해당됩니다<br>";
-								dataHtml+="해당 국가 내에서의 격리 여부: "+countryList2[i]+"<br>";
+								dataHtml+="해당 국가 내에서의 격리 여부: "+countryList2[i]+"<br><br>";
 							}
 						}
-						
-						 
-						
+
 						$.each(items, function(index, item){
 								if(country_name==item.nationNm) {
-									dataHtml+="<br><table width='30%' border>"; 
+									dataHtml+='<table class="table-striped table-sm">'; 
 									dataHtml+="<tr><td>대륙명</td>";
 									dataHtml+="<td><div id='data_Area'>"+item.areaNm+"</div></td>";
 									dataHtml+="</tr>";
@@ -224,11 +237,13 @@ try{
 			    var infowindow = new google.maps.InfoWindow();
 
 			    var marker, i;
+			    var image = new google.maps.MarkerImage('./img/gflagm.png');
 
-			    for (i = 0; i < locationy.length; i++) {  
+			    for (i = 0; i < locationy.length-1; i++) {  
 			      marker = new google.maps.Marker({
 			        position: new google.maps.LatLng(locationy[i][1], locationy[i][2]),
-			        map: map
+			        map: map,
+			        icon: image
 			      });
 
 			      google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -253,15 +268,8 @@ try{
 %>
  
   </head>
-  <body>
-    <div id="map"> <div id="OkTravel"></div></div>
-지도 위 마크를 클릭하시면 <br> 해당 국가의 코로나 발생 현황을 알 수 있습니다
 
-<div id="data_Area"></div>
-<div id="data_Name"></div>
-<div id="data_Death"></div>
-<div id="data_Covid"></div>
-<div id="data_Rate"></div>
+
 
   <style type="text/css">
 

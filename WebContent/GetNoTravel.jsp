@@ -6,6 +6,7 @@
 <head>
 <meta charset="EUC-KR">
 <title>격리 면제 제외 국가 탐색</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
 </head>
 <body>
@@ -25,7 +26,7 @@
 	Connection myConn = null; Statement stmt=null;
 	ResultSet myResultSet = null; String mySQL ="";
 	String dburl="jdbc:oracle:thin:@localhost:1521/xe";
-	String user="db1610479"; String passwd="oracle";
+	String user="db1610479"; String passwd="casiopea86";
 	String dbdriver = "oracle.jdbc.driver.OracleDriver";
 	
 	try{
@@ -86,7 +87,7 @@ try{
 						$.each(items, function(index, item){
 							$.each(countryList, function(i, countryname){
 								if(countryname==item.nationNm) {
-									dataHtml+="<table width='50%' border>"; 
+									dataHtml+='<table class="table-striped table-sm" width="50%">'; 
 									dataHtml+="<tr><td>대륙명</td>";
 									dataHtml+="<td><div id='data_Ar'>"+item.areaNm+"</div></td>";
 									dataHtml+="</tr>";
