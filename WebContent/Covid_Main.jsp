@@ -4,6 +4,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+ <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLBoEc6SOFTtsotbLdVQg75x0IS3GzlGI&callback=initMap&libraries=&v=weekly"
+      defer
+    >
+    </script>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +19,13 @@
 <body>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
-<script type="text/javascript">			
+<script type="text/javascript">		
+
+var myLatLng = {
+		lat: 37.55902624,
+		lng: 126.9749014
+	};
+
 $(document).ready(function geoGet(){
 	$.ajax({
 		url:"https://api.openweathermap.org/data/2.5/onecall",
@@ -42,6 +54,47 @@ $(document).ready(function geoGet(){
 	});
 });
 
+function MyLoc() {
+
+	// 현재위치를 표시해봅시다!!!!!
+    // geolocation 객체가 존재하는 경우 위치 정보 서비스를 지원하는 것입니다
+    if('geolocation' in navigator) {
+		// getCurrentPosition() 메서드를 호출해서 사용자의 현재 위치를 얻을 수 있습니다.
+		const watchID = navigator.geolocation.getCurrentPosition((position) => {
+			
+			// 현재 위치로 변경 해줍니다.
+			myLatLng.lat = position.coords.latitude;
+			myLatLng.lng = position.coords.longitude;
+			
+			$.ajax({
+				url: "https://maps.googleapis.com/maps/api/geocode/json?latlng="+myLatLng.lat+","+myLatLng.lng+"&key=AIzaSyDLBoEc6SOFTtsotbLdVQg75x0IS3GzlGI",
+				type: "get",
+				dataType: "JSON",
+				success: function (data) {
+					console.log(data.results);
+					var nameof = "";
+					nameof = data.results[3].address_components[1].long_name;
+					document.getElementById("newda").innerHTML = nameof;
+				},
+				error: function (xhr, o, err){
+					console.log(xhr.status + ":" +o+":"+err);
+					console.log(xhr.responseText);
+				}
+
+			});
+
+		});
+  	  
+  	  
+  	} else {
+  		// 서비스를 지원 하지 않는경우
+  		alert(" 현재 위치를 찾을수 없습니다.");
+  	}
+	
+}
+
+MyLoc();
+
 </script>
 <div id="ta" class="tt" style="font-weight:bold; font-size:25px; color:gray;" align="center">코트맵</div>
 <div id="title" class="tt" style="font-weight:bold; font-size:20px; color:gray;" align="center">Covid Travel Map</div>
@@ -59,16 +112,17 @@ $(document).ready(function geoGet(){
     <li><a onclick="GoToCity()">국내 지역별 현황</a></li>
     <li><a onclick="GoToWeather()">날씨 조회</a></li>
     <li><a onclick="GoToPlace()">관광지 정보</a></li>
-    <li><a onclick="GoToFly()">항공권 예약</a></li>
+    <li><a onclick="GoToFly()" title="아시아나 최저가 검색">항공권 예약</a></li>
   </div>
   <div class="item3">
-    <i id="hi"></i>
+    <i class="blinking" id="hi"></i>
     <span id="now"></span>
     <span id="des"></span>
     <br />
-    <div class="hh">
+    <div>
     <span id="low" class="blue"></span>/
     <span id="high" class="red"></span>
+    <span id="newda"></span>
     </div>
   </div>
   <div class="barmenu">
@@ -117,7 +171,11 @@ try{
 		var target
 		function GoToNew() {
 			target = $('#countrynames').val();
-			location.href="GetNewCovid.jsp?nation_name="+encodeURI(target,"UTF-8");
+		//	location.href="GetNewCovid.jsp?nation_name="+encodeURI(target,"UTF-8");
+			var url = "GetNewCovid.jsp?nation_name="+encodeURI(target,"UTF-8");
+			var name = target+"의 코로나 현황";
+			var option = "width = 600, height = 420, left = 350, top = 100, location = no"
+			window.open(url, name, option);
 		}
 		function GoToNo() {
 			target = $('#countrynames').val();
@@ -167,6 +225,16 @@ try{
   <p>
   
     <style type="text/css">
+    
+    .blinking{ -webkit-animation:blink 1.5s ease-in-out infinite alternate; 
+    -moz-animation:blink 1.5s ease-in-out infinite alternate; 
+    animation:blink 1.5s ease-in-out infinite alternate; } 
+    
+    @-webkit-keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} } 
+    
+    @-moz-keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} } 
+    
+    @keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} }
 
       /* Optional: Makes the sample page fill the window. */
       html,
@@ -268,10 +336,6 @@ li {
   padding-right: 10px;
 }
 
-.hh {
-  padding-left: 30px;
-}
-
 .barmenu {
   display: none;
 }
@@ -300,14 +364,6 @@ li {
 }
 
     </style>
-    
-    
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLBoEc6SOFTtsotbLdVQg75x0IS3GzlGI&callback=initMap&libraries=&v=weekly"
-      defer
-    >
-    </script>
     
   <script type="text/javascript">
   

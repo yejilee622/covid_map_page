@@ -152,12 +152,12 @@ try{
 		
 		for(var i=0;i<countryList3.length;i++) {
 			if(nation_name==countryList3[i]) {
-				dataHtml+="<br>"+nation_name+"은(는) 해외여행 가능 국가에 해당됩니다<br>";
-				dataHtml+="해당 국가 내에서의 격리 여부: "+countryList2[i]+"<br>";
+				dataHtml+='<br><div class="blinking">'+nation_name+'은(는) 해외여행 가능 국가에 해당됩니다</div><br>';
+				dataHtml+="해당 국가 내에서의 격리 여부: "+countryList2[i]+"<br><br>";
 				break;
 			}
 			if(i>=countryList3.length-1) {
-				dataHtml+="<br>"+nation_name+"은(는) 해외여행 가능 국가에 해당되지 않습니다<br>";
+				dataHtml+='<br><div class="blinking">'+nation_name+"은(는) 해외여행 가능 국가에 해당되지 않습니다</div><br>";
 			}
 		}
 
@@ -287,7 +287,17 @@ try{
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunBatang-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-}
+	}
+	    
+    .blinking{ -webkit-animation:blink 1.5s ease-in-out infinite alternate; 
+    -moz-animation:blink 1.5s ease-in-out infinite alternate; 
+    animation:blink 1.5s ease-in-out infinite alternate; } 
+    
+    @-webkit-keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} } 
+    
+    @-moz-keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} } 
+    
+    @keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} }
     </style>
 
 

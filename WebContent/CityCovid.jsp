@@ -119,7 +119,7 @@
 			success: function (data) {
 				var jsonData = parser.parse(data);
 				var dataHtml="";
-				var dataHtml2="<br><br>국내 지역 "+cityname+"의 코로나 현황입니다<br><br>";
+				var dataHtml2='<br><br><div class="blinking">국내 지역 '+cityname+'의 코로나 현황입니다</div><br>';
 				document.getElementById("city").innerHTML=dataHtml2;
 				
 				// 국가별 코로나 현황 리스트
@@ -138,7 +138,7 @@
 							dataHtml+="</tr>";
 							dataHtml+="<tr>";
 							dataHtml+="<td>전일대비 증감 수</td>";
-							dataHtml+="<td><div id='City_c'>"+item.incDec+"</div></td>";
+							dataHtml+='<td><div id="City_c" class="blinking">'+item.incDec+'</div></td>';
 							dataHtml+="</tr>";
 							dataHtml+="<tr>";
 							dataHtml+="<td>격리 해제 수</td>";
@@ -217,7 +217,17 @@
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunBatang-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-}
+	}	
+	    
+    .blinking{ -webkit-animation:blink 1.5s ease-in-out infinite alternate; 
+    -moz-animation:blink 1.5s ease-in-out infinite alternate; 
+    animation:blink 1.5s ease-in-out infinite alternate; } 
+    
+    @-webkit-keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} } 
+    
+    @-moz-keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} } 
+    
+    @keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} }
     </style>
 
 </body>

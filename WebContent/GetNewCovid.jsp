@@ -42,17 +42,10 @@ function getImg(){
 			nation_name=getParameters('nation_name');
 			
 			$.each(imgdata.data, function(i, item){
-				//console.log(item.country_nm);
 				if(item.country_nm == nation_name){
 					var covid_data="";
 					nation_name=item.country_nm;
-				//	console.log(item.flag_download_url);
-				//	console.log(item.map_download_url);
-					document.getElementById("data_flag").innerHTML="<img src="+item.flag_download_url+" width=120px height=90px>";
-					document.getElementById("data_img").innerHTML="<img src="+item.map_download_url+" width=500px height=600px>";
-				}
-				
-				
+					document.getElementById("data_flag").innerHTML="<img src="+item.flag_download_url+" width=120px height=90px>";				}	
 			});
 		},
 		error: function (xhr, o, err){
@@ -98,7 +91,6 @@ function getCovidData(){
 			}
 			
 				for (const item of items) {
-					//console.log(item.nationNm, nation_name);
 					  if(item.nationNm == nation_name){
 							var covid_data="";
 							nation_name=item.nationNm;
@@ -143,16 +135,25 @@ getCovidData();
     	font-weight: normal;
     	font-style: normal;
 	}
+	    
+    .blinking{ -webkit-animation:blink 1.5s ease-in-out infinite alternate; 
+    -moz-animation:blink 1.5s ease-in-out infinite alternate; 
+    animation:blink 1.5s ease-in-out infinite alternate; } 
+    
+    @-webkit-keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} } 
+    
+    @-moz-keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} } 
+    
+    @keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} }
 
     </style>	
-	<div id="data_img" style="width:45%; float:left;"></div>
+	<br>
 	<br> 
-	<div align="center">
-	<div width="40%" style="float:left;"></div>
+	<div align="center" width="70%">
 	<div id="data_flag" align=center></div><br>
-	<div><tr><td>해당 국가의 코로나 발생 현황 입니다</td></tr></div><br>
+	<div class="blinking"><tr><td>해당 국가의 코로나 발생 현황 입니다</td></tr></div><br>
 	
-	<table class="table-striped table-sm"> 
+	<table class="table-striped table-sm" width="70%"> 
 		<tr><td>대륙명</td>
 		<td><div id="data_Ar"></div></td>
 		</tr>

@@ -274,6 +274,8 @@ body {
   	font-size: 40px;
   	padding: 10px;
   	cursor: pointer;
+  	margin-left: 10px;
+  	margin-right: 10px;
   }
   
    @font-face {

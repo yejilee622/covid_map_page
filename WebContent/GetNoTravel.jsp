@@ -16,10 +16,10 @@
 <!-- xml to json xml을 json 형식으로 변경하기 위한 라이브러리를 추가 합니다. -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fast-xml-parser/3.19.0/parser.min.js"></script>
 <div align=center>
-==================================================<br>
+<br>
 아래 해당 국가들은 2차 백신 접종 완료에도<br>
 격리 면제가 적용되지 않는 국가들입니다 (2021.09 외교부 해외안전여행)<br>
-==================================================<br>
+
 </div>
 <%
 	String test = "";
@@ -80,7 +80,7 @@ try{
 						
 						$.each(items, function(index, item){
 							if(nation_name==item.nationNm) {
-								dataHtml+=nation_name+"은(는) 격리면제 국가에 해당되지 않습니다<br><br>";
+								dataHtml+='<div class="blinking">'+nation_name+'은(는) 격리면제 국가에 해당되지 않습니다</div><br>';
 							}
 						}) 
 						
@@ -156,7 +156,17 @@ try{
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunBatang-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-}
+	}
+	    
+    .blinking{ -webkit-animation:blink 1.5s ease-in-out infinite alternate; 
+    -moz-animation:blink 1.5s ease-in-out infinite alternate; 
+    animation:blink 1.5s ease-in-out infinite alternate; } 
+    
+    @-webkit-keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} } 
+    
+    @-moz-keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} } 
+    
+    @keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} }
     </style>
 
  

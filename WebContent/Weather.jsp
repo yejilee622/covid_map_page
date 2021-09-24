@@ -98,11 +98,10 @@ $(document).ready(function geoGet(){
 		success: function (geodata){
 			var datahtml="";
 			console.log(geodata);
-			datahtml+=nation_name+"의 일주일간 날씨 정보입니다<br>";
 			datahtml+='<table class="table table-striped">'; 
 			datahtml+='<tr><td></td><td>날씨</td><td>아침온도</td><td>점심온도</td><td>저녁온도</td><td>밤온도</td><td>습도</td><td>구름</td><td>자외선</td><td>강수확률</td></tr>';
 			for(var i=1;i<=7;i++) {
-				datahtml+='<tr><td><img src="http://openweathermap.org/img/wn/'+geodata.daily[i].weather[0].icon+'@2x.png" width="50px" height="50px" alt=""></td>';
+				datahtml+='<tr><td><img src="http://openweathermap.org/img/wn/'+geodata.daily[i].weather[0].icon+'@2x.png" width="50px" height="50px" alt="" class="blinking"></td>';
 				datahtml+='<td>'+geodata.daily[i].weather[0].description+'</td>';
 				datahtml+='<td>'+geodata.daily[i].temp.morn+'</td>';
 				datahtml+='<td>'+geodata.daily[i].temp.day+'</td>';
@@ -144,8 +143,19 @@ stmt.close(); myConn.close();
     font-weight: normal;
     font-style: normal;
 }
-    </style>
     
+    .blinking{ -webkit-animation:blink 1.5s ease-in-out infinite alternate; 
+    -moz-animation:blink 1.5s ease-in-out infinite alternate; 
+    animation:blink 1.5s ease-in-out infinite alternate; } 
+    
+    @-webkit-keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} } 
+    
+    @-moz-keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} } 
+    
+    @keyframes blink{ 0% {opacity:0;} 100% {opacity:1;} }
+    
+    </style>
+<div align="center" style="font-size:20px;">일주일간의 날씨정보입니다</div>
 <div id=geoimg></div>
 
 </body>
