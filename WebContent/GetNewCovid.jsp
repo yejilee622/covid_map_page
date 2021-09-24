@@ -48,8 +48,8 @@ function getImg(){
 					nation_name=item.country_nm;
 				//	console.log(item.flag_download_url);
 				//	console.log(item.map_download_url);
-					document.getElementById("data_flag").innerHTML="<img src="+item.flag_download_url+" width=60px height=60px>";
-					document.getElementById("data_img").innerHTML="<img src="+item.map_download_url+" width=300px height=300px>";
+					document.getElementById("data_flag").innerHTML="<img src="+item.flag_download_url+" width=120px height=90px>";
+					document.getElementById("data_img").innerHTML="<img src="+item.map_download_url+" width=500px height=600px>";
 				}
 				
 				
@@ -144,14 +144,13 @@ getCovidData();
     	font-style: normal;
 	}
 
-    </style>
-<div align=center width="70%">
-	==========================================
-	<div id="data_flag" align=center></div>
-	해당 국가의 코로나 발생 현황 입니다<br>
-	==========================================<br>
-	<div id="data_img"></div>
+    </style>	
+	<div id="data_img" style="width:45%; float:left;"></div>
 	<br> 
+	<div align="center">
+	<div width="40%" style="float:left;"></div>
+	<div id="data_flag" align=center></div><br>
+	<div><tr><td>해당 국가의 코로나 발생 현황 입니다</td></tr></div><br>
 	
 	<table class="table-striped table-sm"> 
 		<tr><td>대륙명</td>
@@ -174,6 +173,7 @@ getCovidData();
 		<td><div id="data_Br"></div></td>
 		</tr>
 	</table>
-</div>
+	</div>
+
 </body>
 </html>

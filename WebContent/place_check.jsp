@@ -270,6 +270,12 @@ body {
   padding: 0;
   }
   
+  i{
+  	font-size: 40px;
+  	padding: 10px;
+  	cursor: pointer;
+  }
+  
    @font-face {
   		font-family: 'GowunBatang-Regular';
     	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunBatang-Regular.woff') format('woff');
@@ -283,20 +289,21 @@ body {
 <html>
   <head>
     <title>관광지 정보 알아보기</title>
-
+<script src="https://kit.fontawesome.com/2e8e01c4a1.js" crossorigin="anonymous"></script>
   </head>
   <body>
- 		<input type=button id=restaurent value="식당" style="font-family:GowunBatang-Regular" onclick="ResMap();">
- 		<input type=button id=shopping value="쇼핑" style="font-family:GowunBatang-Regular" onclick="ShopMap();">
- 		<input type=button id=cafe value="카페 " style="font-family:GowunBatang-Regular" onclick="CafeMap();">
- 		<input type=button id=attraction value="가볼만한 곳" style="font-family:GowunBatang-Regular" onclick="TourMap();">
- 		<input type=button id=bar value="바" style="font-family:GowunBatang-Regular" onclick="BarMap();">
-  		<input type=button id=restaurent value="빵집" style="font-family:GowunBatang-Regular" onclick="BreadMap();">
-  		<input type=button id=restaurent value="서점" style="font-family:GowunBatang-Regular" onclick="BookMap();">
-  		<input type=button id=restaurent value="마켓" style="font-family:GowunBatang-Regular" onclick="MarketMap();">
-  		<input type=button id=restaurent value="영화관" style="font-family:GowunBatang-Regular" onclick="MovieMap();">
-  		<input type=button id=restaurent value="공원" style="font-family:GowunBatang-Regular" onclick="ParkMap();">
- 
+  <div align="center">
+ 		<i title="식당" class="fas fa-utensils" id=restaurent onclick="ResMap();"></i>
+ 		<i title="카페" class="fas fa-coffee" id=cafe onclick="CafeMap();"></i>
+   		<i title="빵집" class="fas fa-bread-slice" id=bread onclick="BreadMap();"></i>
+ 		<i title="쇼핑" class="fas fa-shopping-bag" id=shopping onclick="ShopMap();"></i>
+   		<i title="마켓" class="fas fa-shopping-cart" id=market onclick="MarketMap();"></i>	
+ 		<i title="관광" class="fas fa-landmark" id=attraction onclick="TourMap();"></i>
+ 		<i title="바" class="fas fa-glass-martini-alt" id=bar onclick="BarMap();"></i>
+  		<i title="서점" class="fas fa-book" id=book onclick="BookMap();"></i>
+  		<i title="영화관" class="fas fa-video" id=movie onclick="MovieMap();"></i>
+  		<i title="공원" class="fas fa-tree" id=park onclick="ParkMap();"></i>
+ 	</div>
     <div id="map"></div>
 
   </body>

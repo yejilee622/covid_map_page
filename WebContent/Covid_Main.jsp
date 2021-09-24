@@ -8,6 +8,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://kit.fontawesome.com/2e8e01c4a1.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
 <body>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -46,16 +47,34 @@ $(document).ready(function geoGet(){
 <div id="title" class="tt" style="font-weight:bold; font-size:20px; color:gray;" align="center">Covid Travel Map</div>
     <div class="Container">
   <div class="item1">
-    <i class="fas fa-plane"></i>
+    <i class="fas fa-plane-departure"></i>
   </div>
-  <div class="item2">
+  <div class="item2" style="color: gray;
+  font-weight: bold;
+  transition: all 1s;
+  cursor: pointer;">
     <li><a onclick="GoToNew();">코로나 현황</a></li>
     <li><a onclick="GoToNo()">격리 면제 확인</span></a></li>
-    <li><a onclick="GoToOk()"><span class="red">해외여행 가능</a></li>
+    <li><a onclick="GoToOk()"><span class="red">해외여행 가능</span></a></li>
     <li><a onclick="GoToCity()">국내 지역별 현황</a></li>
     <li><a onclick="GoToWeather()">날씨 조회</a></li>
     <li><a onclick="GoToPlace()">관광지 정보</a></li>
     <li><a onclick="GoToFly()">항공권 예약</a></li>
+  </div>
+  <div class="item3">
+    <i id="hi"></i>
+    <span id="now"></span>
+    <span id="des"></span>
+    <br />
+    <div class="hh">
+    <span id="low" class="blue"></span>/
+    <span id="high" class="red"></span>
+    </div>
+  </div>
+  <div class="barmenu">
+    <i class="fas fa-bars"></i>
+  </div>
+</div>
     <%
 	Connection myConn = null; 
 	Statement stmt=null;
@@ -84,7 +103,7 @@ try{
 	myResultSet = stmt.executeQuery(mySQL);
 	if(myResultSet != null) {
 		%>
-		<div align="center"><select style="font-family: 'GowunBatang-Regular'; font-size:17px;" name="countrynames" id="countrynames"> <%
+		<div align="center"><select class="form-control" style="font-family: 'GowunBatang-Regular'; font-size:17px;" name="countrynames" id="countrynames"> <%
 		while(myResultSet.next()) {
 			String c_nm = myResultSet.getString("COUN_NM");
 			test += c_nm+",";
@@ -142,33 +161,12 @@ try{
 	}
 	stmt.close(); myConn.close();
 %>
-  </div>
-  <div class="item3">
-    <i id="hi"></i>
-    <span id="now"></span>
-    <span id="des"></span>
-    <br />
-    <div class="hh">
-    <span id="low" class="blue"></span>/
-    <span id="high" class="red"></span>
-    </div>
-  </div>
-  <div class="barmenu">
-    <i class="fas fa-bars"></i>
-  </div>
-</div>
-    
 <div id="map" style="width:100%; height:100vh;"></div>
 
   <br>
   <p>
   
     <style type="text/css">
-      
-      
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      
 
       /* Optional: Makes the sample page fill the window. */
       html,
@@ -185,6 +183,10 @@ try{
  	    font-weight: normal;
     	font-style: normal;
 	  }
+
+    .form-control{
+    	width: 20%;
+    }
 
 	@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
 	
@@ -233,7 +235,6 @@ a{
   justify-content: space-between;
 }
 .item1 {
-
   border-radius: 4px;
 }
 .item2 {
@@ -248,10 +249,10 @@ a{
   color: gray;
   font-weight: bold;
   transition: all 1s;
-  cursor: pointer;"
+  cursor: pointer;
 }
 .item2>li>a:hover{
-  color: lightgray;
+  color: lightgray!important;
 }
 .item3 {
   padding: 15px;
